@@ -34,7 +34,7 @@ $config['wechat_menu'] = array(
         array(
             'type'  => 'view',
             'name'  => '逛逛',
-            'url'   => base_url('product/discovery'),
+            'url'   => 'www.baidu.com',
         ),
         
         array(
@@ -43,17 +43,17 @@ $config['wechat_menu'] = array(
                 array(
                     'type'  => 'view',
                     'name'  => '正在出售',
-                    'url'   => base_url('user/product/index'),
+                    'url'   => 'www.baidu.com',
                 ),
                 array(
                     'type'  => 'view',
                     'name'  =>'个人中心',
-                    'url'   => base_url('user/home/index'),
+                    'url'   => 'www.baidu.com',
                 ),
                 array(
                     'type'  => 'view',
                     'name'  => '帮助',
-                    'url'   => base_url('home/weixin_help'),
+                    'url'   => 'www.baidu.com',
                 ),
             ),
         ),
