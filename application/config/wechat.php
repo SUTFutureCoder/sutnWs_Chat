@@ -34,7 +34,7 @@ $config['wechat_menu'] = array(
         array(
             'type'  => 'view',
             'name'  => '逛逛',
-            'url'   => site_url('product/discovery'),
+            'url'   => base_url('product/discovery'),
         ),
         
         array(
@@ -43,17 +43,17 @@ $config['wechat_menu'] = array(
                 array(
                     'type'  => 'view',
                     'name'  => '正在出售',
-                    'url'   => site_url('user/product/index'),
+                    'url'   => base_url('user/product/index'),
                 ),
                 array(
                     'type'  => 'view',
                     'name'  =>'个人中心',
-                    'url'   => site_url('user/home/index'),
+                    'url'   => base_url('user/home/index'),
                 ),
                 array(
                     'type'  => 'view',
                     'name'  => '帮助',
-                    'url'   => site_url('home/weixin_help'),
+                    'url'   => base_url('home/weixin_help'),
                 ),
             ),
         ),
