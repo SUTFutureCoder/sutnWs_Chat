@@ -32,8 +32,8 @@ class Weixin extends CI_Controller{
     }
     
     //其他逻辑
-}
-
-function logdebug($text){
-    file_put_contents('./upload/log.txt', $text . PHP_EOL, FILE_APPEND);
+    
+    function logdebug($text){
+        file_put_contents('./upload/log.txt', $text . PHP_EOL, FILE_APPEND);
+    }
 }
