@@ -19,7 +19,6 @@ class Mywechat extends WechatEx{
         parent::__construct($options);
         if (function_exists('get_instance')){
             $this->_ci =& get_instance();
-            $this->_ci->load->model('product_model', 'product');
         }
     }
     
