@@ -17,7 +17,7 @@ class Mywechat extends WechatEx{
     private $_ci;
     public function __construct($options) {
         parent::__construct($options);
-        if (function_exists('get_instance') && define('APPPATH')){
+        if (function_exists('get_instance')){
             $this->_ci =& get_instance();
             $this->_ci->load->model('product_model', 'product');
         }
