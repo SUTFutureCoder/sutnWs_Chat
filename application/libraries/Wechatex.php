@@ -12,7 +12,7 @@ if (!defined('BASEPATH'))
  * @version    
  * @link       https://github.com/SUTFutureCoder/
 */
-include APPPATH . '/libraries/wechat-sdk/wechat.php';
+include APPPATH . 'libraries/wechat-sdk/wechat.php';
 class WechatEx extends Wechat{
     const EVENT_SUBSCRIBE  = 'SUBSCRIBE'; // 没关注时扫描：订阅公共号
     const EVENT_UNSUBSCRIBE = 'UNSUBSCRIBE';// 已关注后，手动取消订阅号时触发
