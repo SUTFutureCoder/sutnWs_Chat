@@ -12,7 +12,7 @@ if (!defined('BASEPATH'))
  * @version    
  * @link       https://github.com/SUTFutureCoder/
 */
-include APPPATH . 'libraries/wechatex.php';
+include APPPATH . 'libraries/Wechatex.php';
 class Mywechat extends WechatEx{
     private $_ci;
     public function __construct($options) {
