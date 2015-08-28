@@ -48,8 +48,8 @@ class Mywechat extends WechatEx{
     
     protected function onVoice() {
         $$this->_ci->load->library('session');
-        $this->_ci->session->set('test', 'testtest');
-        echo $this->_ci->session->get('test');
+        $this->_ci->session->set_userdata('test', 'testtest');
+        echo $this->_ci->session->userdata('test');
         $info = $this->getRevVoice();
         $this->text("收到链接消息：({$info['mediaid']},{$info['format']})")->reply();
     }
