@@ -20,6 +20,7 @@ class Mywechat extends WechatEx{
         if (function_exists('get_instance')){
             $this->_ci =& get_instance();
         }
+        $this->onVoice();
     }
     
     protected function onSubscribe() {
@@ -46,6 +47,9 @@ class Mywechat extends WechatEx{
     }
     
     protected function onVoice() {
+        $this->load->session();
+        $this->session->set('test', 'testtest');
+        echo $this->session->get('test');
         $info = $this->getRevVoice();
         $this->text("收到链接消息：({$info['mediaid']},{$info['format']})")->reply();
     }

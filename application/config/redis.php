@@ -12,7 +12,7 @@ if (!defined('BASEPATH'))
  * @version    
  * @link       https://github.com/SUTFutureCoder/
 */
-$config['socket_type'] = 'unix'; //`tcp` or `unix`
+$config['socket_type'] = 'tcp'; //`tcp` or `unix`
 $config['socket'] = '/data/redis/redis.pid'; // in case of `unix` socket type
 $config['host'] = '127.0.0.1';
 $config['password'] = NULL;
