@@ -47,7 +47,7 @@ class Mywechat extends WechatEx{
     }
     
     protected function onVoice() {
-        $this->load->session();
+        $this->load->library('session');
         $this->session->set('test', 'testtest');
         echo $this->session->get('test');
         $info = $this->getRevVoice();

@@ -358,7 +358,7 @@ $config['encryption_key'] = '*Chen';
 $config['sess_driver'] = 'redis';
 $config['sess_cookie_name'] = 'ci_session';
 $config['sess_expiration'] = 7200;
-$config['sess_save_path'] = '127.0.0.1:6379?auth=admin&prefix=ci_sess:&database=2&timeout=60';
+$config['sess_save_path'] = 'tcp://localhost:6379';
 $config['sess_match_ip'] = FALSE;
 $config['sess_time_to_update'] = 300;
 $config['sess_regenerate_destroy'] = FALSE;
