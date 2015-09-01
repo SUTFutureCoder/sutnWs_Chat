@@ -20,17 +20,17 @@ class Setting_model extends CI_Model{
     }
     
     public function set($cacheName,array $array){
-        $this->load->driver('cache');
-        $this->cache->redis->save(self::$redis_prefix . $cacheName, $array, $array['expire_time']);
+        $this->load->library('redis');
+        return $this->redis->set(self::$redis_prefix . $cacheName, serialize($array), $array['expire_time']);
     }
     
     public function get($cacheName){
-        $this->load->driver('cache');
-        $this->cache->redis->get(self::$redis_prefix . $cacheName);
+        $this->load->library('redis');
+        return $this->redis->get(self::$redis_prefix . $cacheName);
     }
     
     public function remove($cacheName){
-        $this->load->driver('cache');
-        $this->cache->redis->delete(self::$redis_prefix . $cacheName);
+        $this->load->library('redis');
+        return $this->redis->delete($cacheName);
     }
 }
