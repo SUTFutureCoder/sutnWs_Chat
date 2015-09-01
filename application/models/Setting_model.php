@@ -26,7 +26,8 @@ class Setting_model extends CI_Model{
     
     public function get($cacheName){
         $this->load->library('redis');
-        return $this->redis->get(self::$redis_prefix . $cacheName);
+        $result = $this->redis->get(self::$redis_prefix . $cacheName);
+        return unserialize($result);
     }
     
     public function remove($cacheName){
