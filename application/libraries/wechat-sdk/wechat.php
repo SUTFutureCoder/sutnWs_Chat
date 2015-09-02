@@ -220,7 +220,7 @@ class Wechat
 	private $_funcflag = false;
 	private $_receive;
 	private $_text_filter = true;
-	public $debug =  false;
+	public $debug =  true;
 	public $errCode = 40001;
 	public $errMsg = "no access";
 	public $logcallback;
