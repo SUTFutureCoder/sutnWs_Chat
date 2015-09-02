@@ -31,7 +31,7 @@ class Mywechat extends WechatEx{
     }
     
     protected function onText() {
-        parent::onText();
+        $this->text('悄悄地我走了，正如我悄悄地来。')->reply();
     }
     
     protected function onLocation() {
