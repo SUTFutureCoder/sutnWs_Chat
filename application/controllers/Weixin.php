@@ -29,14 +29,15 @@ class Weixin extends CI_Controller{
     
     public function menu(){
         $menus = $this->config->item('wechat_menu');
+        print_r($menus);
         $flag = $this->mywechat->createMenu($menus);
         echo !$flag ? 'FALSE' : json_encode($menus);
     }
     
     //其他逻辑
-
+    function logdebug($text){
+        file_put_contents('./upload/log.txt', $text . PHP_EOL, FILE_APPEND);
+    }
 }
     
-function logdebug($text){
-    file_put_contents('./upload/log.txt', $text . PHP_EOL, FILE_APPEND);
-}
+
