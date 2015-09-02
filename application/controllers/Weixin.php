@@ -22,6 +22,7 @@ class Weixin extends CI_Controller{
     }
     
     public function api(){
+        file_put_contents(APPPATH . 'upload/log.txt', date('Y-m-d H:i:s') . PHP_EOL . print_r($_REQUEST, true), FILE_APPEND);
         $this->mywechat->run();
     }
     

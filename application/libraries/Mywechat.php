@@ -20,7 +20,6 @@ class Mywechat extends WechatEx{
         if (function_exists('get_instance')){
             $this->_ci =& get_instance();
         }
-        file_put_contents(APPPATH . 'upload/log.txt', date('Y-m-d H:i:s') . PHP_EOL . print_r($_REQUEST, true), FILE_APPEND);
     }
     
     protected function onSubscribe() {
