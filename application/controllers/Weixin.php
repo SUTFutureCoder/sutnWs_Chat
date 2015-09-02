@@ -15,6 +15,7 @@ if (!defined('BASEPATH'))
 class Weixin extends CI_Controller{
     public function __construct() {
         parent::__construct();
+        file_put_contents(APPPATH . 'upload/log.txt', date('Y-m-d H:i:s') . PHP_EOL . print_r($_REQUEST, true), FILE_APPEND);
         $this->config->load('wechat');
         $options = $this->config->item('wechat');
         $options['logcallback'] = 'logdebug';
