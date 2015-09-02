@@ -22,18 +22,18 @@ class Setting_model extends CI_Model{
     }
     
     public function set($cacheName,array $array){
-        $this->_ci->load->library('redis');
-        return $this->_ci->redis->set(self::$redis_prefix . $cacheName, serialize($array), $array['expire_time']);
+        $this->_ci->load->helper('redis_test');
+        return $this->_ci->redis_test->set(self::$redis_prefix . $cacheName, serialize($array), $array['expire_time']);
     }
     
     public function get($cacheName){
-        $this->_ci->load->library('redis');
-        $result = $this->_ci->redis->get(self::$redis_prefix . $cacheName);
+        $this->_ci->load->library('redis_test');
+        $result = $this->_ci->redis_test->get(self::$redis_prefix . $cacheName);
         return unserialize($result);
     }
     
     public function remove($cacheName){
-        $this->_ci->load->library('redis');
-        return $this->_ci->redis->delete($cacheName);
+        $this->_ci->load->library('redis_test');
+        return $this->_ci->redis_test->delete($cacheName);
     }
 }
