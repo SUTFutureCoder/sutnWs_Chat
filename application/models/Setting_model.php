@@ -15,23 +15,25 @@ if (!defined('BASEPATH'))
 class Setting_model extends CI_Model{
     private static $redis_prefix = 'sutnws_token_';
 
+    private $_ci;
     public function __construct() {
         parent::__construct();
+        $this->_ci =& get_instance();
     }
     
     public function set($cacheName,array $array){
-        $this->load->library('redis');
-        return $this->redis->set(self::$redis_prefix . $cacheName, serialize($array), $array['expire_time']);
+        $this->_ci->load->library('redis');
+        return $this->_ci->redis->set(self::$redis_prefix . $cacheName, serialize($array), $array['expire_time']);
     }
     
     public function get($cacheName){
-        $this->load->library('redis');
-        $result = $this->redis->get(self::$redis_prefix . $cacheName);
+        $this->_ci->load->library('redis');
+        $result = $this->_ci->redis->get(self::$redis_prefix . $cacheName);
         return unserialize($result);
     }
     
     public function remove($cacheName){
-        $this->load->library('redis');
-        return $this->redis->delete($cacheName);
+        $this->_ci->load->library('redis');
+        return $this->_ci->redis->delete($cacheName);
     }
 }
