@@ -37,7 +37,7 @@ class Myredis{
     
     public function get($key){
         if (!isset(self::$redis)){
-            $this->getInstance();
+            self::$redis = $this->getInstance();
         }
         return self::$redis->get($key);
     }
