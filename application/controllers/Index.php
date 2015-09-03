@@ -17,13 +17,28 @@ class Index extends CI_Controller{
         parent::__construct();
     }
     
+    /**    
+     *  显示招新报名界面    
+     *  
+     * @access public
+    */
     public function index(){
-        include __DIR__ . '/../libraries/LaneWeChat/wechat.php';
+        $this->load->model('');
+        
+        $this->load->view('sign_up_view');
     }
-
-
-    public function api(){
-        include __DIR__ . '/../libraries/LaneWeChat/lanewechat.php';
-        $menuList = LaneWeChat\Core\Menu::getMenu();
+    
+    /**    
+     *  显示验证码  
+     * 
+     * @access public  
+     *  
+    */
+    public function getOfflineAgnomen(){
+        $this->load->library('session');
+        $this->load->library('ValidateCode');
+        $_vc = new ValidateCode();            
+        $_vc->doimg();
+        $this->session->set_userdata('authnum_session', $_vc->getCode());
     }
 }
