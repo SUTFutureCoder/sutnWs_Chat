@@ -17,7 +17,8 @@ class Myredis{
     
     public function getInstance(){
         if (!isset(self::$redis)){
-            self::$redis = new Redis();
+            $redis = new Redis();
+            self::$redis = $redis->connect('127.0.0.1', 6379);
         }
         return self::$redis;
     }
