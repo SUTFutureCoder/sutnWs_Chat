@@ -16,15 +16,15 @@ class Myredis{
     private static $redis;
     
     public function __construct() {
-        $redis = new Redis();
-        self::$redis = $redis->connect();
+        self::$redis = new Redis();
+        self::$redis->connect('127.0.0.1', 6379);
         self::$redis->set('test', 'test');
     }
     
     public function getInstance(){
         if (!isset(self::$redis)){
-            $redis = new Redis();
-            self::$redis = $redis->connect('127.0.0.1', 6379);
+            self::$redis = new Redis();
+            self::$redis->connect('127.0.0.1', 6379);
         }
         return self::$redis;
     }
