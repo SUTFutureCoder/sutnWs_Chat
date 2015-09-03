@@ -12,7 +12,7 @@ if (!defined('BASEPATH'))
  * @version    
  * @link       https://github.com/SUTFutureCoder/
 */
-class Redis_test{
+class MyRedis{
     private static $redis;
     
     public function getInstance(){
