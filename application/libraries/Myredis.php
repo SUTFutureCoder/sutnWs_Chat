@@ -17,7 +17,7 @@ class Myredis{
     
     public function __construct() {
         $redis = new Redis();
-        self::$redis = $redis->connect('127.0.0.1', 6379);
+        self::$redis = $redis->connect();
         self::$redis->set('test', 'test');
     }
     
