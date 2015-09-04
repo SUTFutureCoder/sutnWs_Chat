@@ -88,7 +88,7 @@
     </form>
     <form action="<?= base_url('index.php/index/ajaxFileUpload')?>" id="file_upload" class="form-horizontal col-sm-10" id="form1" name="form1" encType="multipart/form-data"  method="post" target="file_frame">
         <div class="form-group">
-            <label for="file" class="col-sm-2 control-label">作品材料</label>
+            <label for="file" class="col-sm-2 control-label">作品材料【选填】</label>
             <div class="col-sm-9">
                 <input type="hidden" hidden="hidden" class="form-control" name="file_user_number" id="file_user_number">
                 <input type="file" class="form-control" id="event_certify_file" name="file">
@@ -125,14 +125,14 @@
               <div class="col-xs-3">
                 <h4>联系方式</h4>
                 <ul class="list-unstyled">
-                  <li><a href="mailto:FutureCoder@aliyun.com">电子邮件</a></li>
+                  <li><a href="mailto:FutureCoder@aliyun.com">FutureCoder@aliyun.com</a></li>
                 </ul>
               </div>
               <div class="col-xs-3">
                 <h4>旗下网站</h4>
                 <ul class="list-unstyled">
                   <li><a href="http://zx.sutapp.com/" target="_blank">招新主页</a></li>
-                  <li><a href="http://festival.sutapp.com/" target="_blank">网络文化节主页</a></li>
+                  <li><a href="http://festival.sutapp.com/" target="_blank">网络文化节</a></li>
                   <li><a href="http://youth.sut.edu.cn/" target="_blank">青春风景网</a></li>
                   <li><a href="http://football.sutapp.com/" target="_blank">工大足球</a></li>
                 </ul>
