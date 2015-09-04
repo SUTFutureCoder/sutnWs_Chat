@@ -37,7 +37,7 @@ class Index extends CI_Controller{
      * @access public  
      *  
     */
-    public function getOfflineAgnomen(){
+    public function getAgnomen(){
         $this->load->library('session');
         $this->load->library('ValidateCode');
         $_vc = new ValidateCode();            
