@@ -13,6 +13,9 @@ if (!defined('BASEPATH'))
  * @link       https://github.com/SUTFutureCoder/
 */
 class Section extends CI_Model{
+    private $redisSectionList = 'nwsapp_section_list';
+
+
     public function __construct() {
         parent::__construct();
     }
@@ -25,5 +28,15 @@ class Section extends CI_Model{
      */
     public function getSectionList(){
         $this->load->database();
+        $this->load->library('myredis');
+        $data = array();
+        if (!$data = unserialize($this->myredis->get($this->redisSectionList))){
+            $result = $this->db->get('section');
+            foreach ($result->result_array() as $row){
+                $data[] = $row;
+            }
+            $this->myredis->set($this->redisSectionList, serialize($data));
+        }
+        return $data;
     }
 }

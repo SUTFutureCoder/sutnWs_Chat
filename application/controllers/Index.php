@@ -23,9 +23,12 @@ class Index extends CI_Controller{
      * @access public
     */
     public function index(){
-        $this->load->model('');
-        
-        $this->load->view('sign_up_view');
+        $this->load->helper('url');
+        $this->load->model('section');
+        $sectionList = $this->section->getSectionList();
+        $this->load->view('sign_up_view', array(
+            'sectionList' => $sectionList,
+        ));
     }
     
     /**    
