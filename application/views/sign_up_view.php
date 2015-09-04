@@ -86,7 +86,7 @@
             <textarea class="form-control" rows="5" id="user_talent"></textarea>
         </div>
     </form>
-    <form action="<?= base_url('index.php/index/ajaxFileUpload')?>" id="file_upload" class="form-horizontal col-sm-10" id="form1" name="form1" encType="multipart/form-data"  method="post" target="file_frame">
+    <form action="<?= base_url('index.php/index/ajaxFileUpload')?>" id="file_upload" class="form-horizontal col-sm-10 col-sm-offset-1" id="form1" name="form1" encType="multipart/form-data"  method="post" target="file_frame">
         <div class="form-group">
             <label for="file" class="col-sm-2 control-label">作品材料【选填】</label>
             <div class="col-sm-9">
@@ -104,7 +104,7 @@
     <iframe name='file_frame' id="file_frame" style='display:none'></iframe>
     <br/>
     <br/>
-    <hr class="col-sm-12">
+    <hr class="col-sm-11">
     <footer class="footer">
       <div class="container">
         <div class="row footer-top">
