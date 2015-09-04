@@ -96,7 +96,7 @@
             <button class="btn btn-info" id="upload_submit" type="submit">上传</button>
         </div>
         <div class="form-group">
-            <div class=" col-sm-12 col-sm-offset-1">
+            <div class="col-sm-12">
                 <button type="button" class="btn btn-info btn-block" id="signUp_submit">"家"入网管</button>
             </div>
         </div>
