@@ -95,6 +95,11 @@
             </div>
             <button class="btn btn-info" id="upload_submit" type="submit">上传</button>
         </div>
+        <div class="form-group" id="validate">
+            <label for="validatecode" class="control-label">验证码</label>
+            <input type="text" class="form-control col-sm-4" aria-describedby="validatecode" id="validatecode">
+            <img id="validatecode_img" src="<?= base_url('index.php/index/getagnomen')?>" width="100">
+        </div>
         <div class="form-group">
             <div class="col-sm-12">
                 <button type="button" class="btn btn-info btn-block" id="signUp_submit">"家"入网管</button>
@@ -104,7 +109,7 @@
     <iframe name='file_frame' id="file_frame" style='display:none'></iframe>
     <br/>
     <br/>
-    <hr class="col-sm-11">
+    <hr class="col-sm-10 col-sm-offset-1">
     <footer class="footer">
       <div class="container">
         <div class="row footer-top">
@@ -162,7 +167,8 @@
         var dom = {
             basicInfo : $('#basic_info'),
             sectionWill : $('#section_will'),
-            fileUpload : $('#file_upload')
+            fileUpload : $('#file_upload'),
+            validate : $('#validate')
         };
         
         var section = [];
@@ -181,6 +187,11 @@
                 dom.sectionWill.on('change', '.section_will_select', function(){
                     var comment = $(this).parent().find('.section_comment');
                     comment.html(section[$(this).val()]);
+                });
+                
+                dom.validate.on('click', '#validatecode_img', function(){
+                    var img = $(this);
+                    img.attr('src', '<?= base_url('index.php/index/getagnomen')?>');
                 });
             }
         };
