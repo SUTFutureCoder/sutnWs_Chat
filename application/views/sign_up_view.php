@@ -125,7 +125,7 @@
               <div class="col-xs-3">
                 <h4>联系方式</h4>
                 <ul class="list-unstyled">
-                  <li><a href="mailto:FutureCoder@aliyun.com">FutureCoder@aliyun.com</a></li>
+                  <li><a href="mailto:FutureCoder@aliyun.com">QQ:506200331</a></li>
                 </ul>
               </div>
               <div class="col-xs-3">
