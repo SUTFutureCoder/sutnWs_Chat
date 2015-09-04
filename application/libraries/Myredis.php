@@ -15,12 +15,6 @@ if (!defined('BASEPATH'))
 class Myredis{
     private static $redis;
     
-    public function __construct() {
-        self::$redis = new Redis();
-        self::$redis->connect('127.0.0.1', 6379);
-        self::$redis->set('test', 'test');
-    }
-    
     public function getInstance(){
         if (!isset(self::$redis)){
             self::$redis = new Redis();
