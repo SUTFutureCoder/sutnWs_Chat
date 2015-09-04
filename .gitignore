@@ -5,5 +5,5 @@
 */cache/*
 */cache/!index.html
 */cache/!.htaccess
-/nbproject/private/
+/nbproject/*
 /application/upload/log.txt
