@@ -158,6 +158,7 @@
         </div>
       </div>
     </footer>
+    <input type="hidden" id = "hide_site_url" name = "hide_site_url" value="<?= site_url();?>"/>
     <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
     <script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="<?= base_url('js/json.js')?>"></script>

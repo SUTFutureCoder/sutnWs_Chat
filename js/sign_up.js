@@ -24,12 +24,12 @@ $(document).ready(function() {
 	    },
 
 	    checkSign : function() {
-	    /*	if(checkReturn.checkName && checkReturn.checkTelephone &&
+	    	if(checkReturn.checkName && checkReturn.checkTelephone &&
 	    	 checkReturn.checkQQ && checkReturn.checkNumber && checkReturn.checkMarjor) {
 	    		return true;
 	    	} else {
 	    		return false;
-	    	}*/
+	    	}
 	    },
 
 	    eventCheck: function() {
@@ -48,10 +48,78 @@ $(document).ready(function() {
 
 	    	dom.userTelephone.bind('input propertychange blur',function() {
 	    		var telephone = $(this).val();
+	    		var reg = /^0?1[3|4|5|8][0-9]\d{8}$/;
+	    		if(!reg.test(telephone)) {
+	    		 	checkReturn.checkTelephone = false;
+	    		} else {
+	    		 	checkReturn.checkTelephone = true;
+	    		}
+	    	});
+
+	    	dom.userQQ.bind('input propertychange blur',function() {
+	    		var qq = $(this).val();
+	    		var len = qq.length;
+	    		if(len >= 5 && len <= 16) {
+	    			checkReturn.userQQ = true;
+	    		} else {
+	    			checkReturn.userQQ = false;
+	    		}
+	    	});
+
+	    	dom.userNumber.bind('input propertychange blur',function() {
+	    		var number = $(this).val();
+	    		var len = number.length;
+	    		if(len != 9) {
+	    			checkReturn.userNumber =  false;
+	    		} else {
+	    			url = $('#hide_site_url').val() + '/Index/checkNumber';
+	    			$.post(url,{number:number},function(data) {
+	    				if(data == true) {
+	    					checkReturn.userNumber =  true;
+	    				} else {
+	    					checkReturn.userNumber =  false;
+	    				}
+	    			});
+	    		}
+	    	});
+
+	    	dom.userMarjor.bind('input propertychange blur',function() {
+	    		var marjor = $(this).val;
+	    		var len = marjor.length;
+	    		if(len > 0 && len <= 30) {
+	    			checkReturn.userMarjor = false;
+	    		} else {
+	    			checkReturn.userMarjor = false;
+	    		}
 	    	});
 	    }
 	}
 
 	signUpCheck.init();
-	signUpCheck.checkSign();
+	//signUpCheck.checkSign();
+	$('#signUp_submit').click(function() {
+			if(checkReturn.checkName == false) {
+				alert("请检查姓名填写是否正确");
+			} else if(checkReturn.checkTelephone == false) {
+				alert("请检查练习方式填写是否正确");
+			} else if(checkReturn.checkQQ == false) {
+				alert("请检查QQ填写是否正确");
+			} else if(checkReturn.checkNumber == false) {
+				alert("请检查学号填写是否正确");
+			} else if(checkReturn.checkMarjor == false) {
+				alert("请检查专业填写是否正确");
+			} else {
+				var check = signUpCheck.checkSign();
+				if(check != true) {
+					alert("请检查你填写的信息是否正确！");
+				} else {
+					var url = $('#hide_site_url').val() + '/Index/submitUser';
+					$.post(url,{
+
+					},function() {
+
+					});
+				}
+			}
+	});
 });
