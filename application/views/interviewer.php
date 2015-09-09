@@ -6,6 +6,72 @@
         <link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
+<br/>
+<div class="container col-sm-offset-1 col-sm-10" >
+<div class="basic_info">
+<div class="form-group">
+    <label for="user_name" class="control-label">姓名</label>
+    <input type="text" class="form-control" aria-describedby="user_name" id="user_name" value="<?= $userInfo['user_name'];?>" disabled>
+</div>
+<div class="form-group">
+    <label for="user_telephone" class="control-label">联系方式</label>
+    <input type="text" class="form-control" aria-describedby="user_telephone" id="user_telephone" value="<?= $userInfo['user_telephone'];?>" disabled>
+</div>
+<div class="form-group">
+    <label for="user_qq" class="control-label">QQ号</label>
+    <input type="text" class="form-control" aria-describedby="user_qq" id="user_qq" value="<?= $userInfo['user_qq'];?>" disabled>
+</div>
+<div class="form-group">
+    <label for="user_number" class="control-label">学号</label>
+    <input type="text" class="form-control" aria-describedby="user_number"  placeholder="见学生卡" id="user_number" value="<?= $userInfo['user_number'];?>" disabled>
+</div>
+<div class="form-group">
+    <label for="user_major" class="control-label">专业</label>
+    <input type="text" class="form-control" aria-describedby="user_major" id="user_major" value="<?= $userInfo['user_major'];?>" disabled>
+</div>
+<div class="form-group">
+    <label for="user_sex" class="control-label">性别</label>
+    <input type="text" class="form-control" aria-describedby="user_sex" id="user_sex" value="<?= $userInfo['user_sex'];?>" disabled>
+</div>  
+<div class="form-group">
+    <label for="first_section" class="control-label">第一志愿</label>
+    <input type="text" class="form-control" aria-describedby="first_section" id="first_section" value="<?= $userInfo['first_section'];?>" disabled>
+</div>  
+<div class="form-group">
+    <label for="first_section" class="control-label">第二志愿</label>
+    <input type="text" class="form-control" aria-describedby="second_section" id="second_section" value="<?= $userInfo['second_section'];?>" disabled>
+</div>  
+<div class="form-group">
+    <label for="first_section" class="control-label">第三志愿</label>
+    <input type="text" class="form-control" aria-describedby="third_section" id="third_section" value="<?= $userInfo['third_section'];?>" disabled>
+</div>  
+<div class="form-group">
+    <label for="user_talent" class="control-label">特长</label>
+    <textarea class="form-control" rows="5" id="user_talent" disabled><?= $userInfo['user_talent'];?></textarea>
+</div>
+<div class="form-group">
+    <label for="file_img" class="control-label">作品材料</label>
+    <img src="<?= $userInfo['img_address'];?>" alt="" id = "file_img">
+</div>
+</div>
+<form  action="<?= site_url('Interviewer/userScore');?>" method="post">
+    <div class="form-group">
+        <label for="file_img" class="control-label"><?= $section;?>面试官打分</label>
+        <input type="text"  class="form-control" aria-describedby="user_score" id="user_score" name="user_score">
+        <input type="hidden" class="form-control" name="section_id" id = "interviewerSection" value="<?= $section_id;?>" >
+        <input type="hidden" class="form-control" name="user_id" id = "user_id" value="<?= $userInfo['user_id'];?>">
+    </div>
+    <div class="form-group">
+                <div class="col-sm-12">
+                    <button type="submit" class="btn btn-info btn-block" id="signUp_submit">确定</button>
+                </div>
+            </div>
+</form>
+<br/>
+<br/>
+<br/>
+<br/>
+</div>
 <footer class="footer">
   <div class="container">
     <div class="row footer-top">

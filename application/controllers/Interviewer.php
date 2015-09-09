@@ -27,17 +27,16 @@ class Interviewer extends CI_Controller{
    	private $userInfo = array(
     		'user_id' => false,
     		'user_name' => false,
-    		'user_namber' => false,
+    		'user_number' => false,
     		'user_qq' => false,
     		'user_major' => false,
     		'user_sex' => false,
     		'user_telephone' => false,
-    		'user_telephone' => false,
-    		'user_telephone' => false,
     		'first_section' => false,
     		'second_section' => false,
     		'third_section' => false,
-    		'user_talent' => false
+    		'user_talent' => false,
+    		'img_address' => false
     		);
 
     public function index(){
@@ -45,14 +44,15 @@ class Interviewer extends CI_Controller{
     	$userInfo = array(
     		'user_id' => $this->input->get('user_id',TRUE),
     		'user_name' => $this->input->get('user_name',TRUE),
-    		'user_namber' => $this->input->get('user_number',TRUE),
+    		'user_number' => $this->input->get('user_number',TRUE),
     		'user_qq' => $this->input->get('user_qq',TRUE),
     		'user_major' => $this->input->get('user_major',TRUE),
     		'user_sex' => $this->input->get('user_sex',TRUE),
     		'first_section' => $this->input->get('first_section',TRUE),
     		'second_section' => $this->input->get('second_section',TRUE),
     		'third_section' => $this->input->get('third_section',TRUE),
-    		'user_talent' => $this->input->get('user_talent',TRUE)
+    		'user_talent' => $this->input->get('user_talent',TRUE),
+    		'img_address' => $this->input->get('img_address',TRUE)
     		);
     	$this->load->helper('url');
     	$this->load->view('interviewer_login');
@@ -64,15 +64,23 @@ class Interviewer extends CI_Controller{
      *  
      * @access public
     */
-   private function showInterviewer($section) {
-   	/*	$this->load->helper('url');
+   public function showInterviewer() {
+   		$this->load->library('session');
+   		$section_id = $this->input->get('session',TRUE);
+   		$section = $this->session->userdata('interviewerSection');
+   		$this->load->helper('url');
    		$this->load->model('section');
-   		$sectionList = $this->section->getSectionList();
-   		$this->load->view('interviewer', array(
-   		    'sectionList' => $sectionList,
-   		    'userInfo' => $this->userInfo(),
-   		    'section' => $section,
-   		));*/
+   		if(!$section) {
+   			redirect('Index/index');
+   		} else {
+   			$sectionList = $this->section->getSectionList();
+   			$this->load->view('interviewer', array(
+   			    'sectionList' => $sectionList,
+   			    'userInfo' => $this->userInfo,
+   			    'section_id' => $section_id,
+   			    'section' => $section
+   			)); 
+   		}
    }
 
    /**    
@@ -81,34 +89,55 @@ class Interviewer extends CI_Controller{
     * @access public
    */
    public function checkPwd() {
+   		$this->load->helper('url');
+   		$this->load->library('session');
    		$interviewerPwd = $this->input->post('interviewerPwd',TRUE);
    		if(!isset($interviewerPwd)) {
    			self::index();
    		}
+   		//echo $interviewerPwd;
    		switch ($interviewerPwd) {
    			case 'nwsxuanchuan':
-   				self::showInterviewer('1');
+   				$this->session->set_userdata('interviewerSection', '采编部');
+   				echo '1';
    				break;	
    			case 'nwswailian' :
-   				self::showInterviewer('2');
+   				$this->session->set_userdata('interviewerSection', '外联部');
+   				echo '2';
    				break;
    			case 'nwscaibian' :
-   				self::showInterviewer('3');
+   				$this->session->set_userdata('interviewerSection', '采编部');
+   				echo '3';
    				break;	
    			case 'nwscehua' :
-   				self::showInterviewer('4');
+   				$this->session->set_userdata('interviewerSection', '策划部');
+   				echo '4';
    				break;
    			case 'nwsyinyin' :
-   				self::showInterviewer('5');
+   				$this->session->set_userdata('interviewerSection', '影音部');
+   				echo '5';
    				break;
    			case 'nwsjishu':
-   				self::showInterviewer('6');
+   				$this->session->set_userdata('interviewerSection', '技术部');
+   				echo '6';
    				break;	
    			default:
+   				$this->session->unset_userdata('interviewerSection');
    				echo false;
    				break;
    		}
+   }
 
+   /**    
+    *  面试官打分
+    *  
+    * @access public
+   */
+   public function userScore() {
+   	$user_id = $this->input->post('user_id',TRUE);
+   	$section_id = $this->input->post('section_id',TRUE);
+   	$user_score = $this->input->post('user_score',TRUE);
+   	$this->session->unset_userdata('interviewerSection');
    }
 
 }

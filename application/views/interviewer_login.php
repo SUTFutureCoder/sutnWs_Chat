@@ -20,11 +20,13 @@
 				//alert(1);
 				alert("密码不正确！");
 				window.location.reload();
+			} else {
+				window.location.href = '<?= site_url();?>' + '/Interviewer/showInterviewer?section=' + data;
 			}
 		});
 	} else {
 		alert("密码不正确！");
-		//window.location.reload();
+		window.location.reload();
 	}
 </script>	
 </body>
