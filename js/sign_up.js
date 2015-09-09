@@ -26,16 +26,14 @@ $(document).ready(function() {
 	        this.eventCheck();
 	    },
 
-	    checkSign : function() {
-	    	if(checkReturn.checkName && checkReturn.checkTelephone &&
-	    	 checkReturn.checkQQ && checkReturn.checkNumber && checkReturn.checkMarjor && 
-	    	 checkReturn.sectionWill && checkReturn.checkValidatecode) {
+	   /* checkSign : function() {
+	    	if(checkReturn.checkName && checkReturn.checkTelephone && checkReturn.checkQQ && checkReturn.checkNumber && checkReturn.checkMarjor && checkReturn.sectionWill && checkReturn.checkValidatecode) {
 	    		return true;
 	    	} else {
 	    		return false;
 	    	}
 	    },
-
+*/
 	    checkValidatecode : function() {
 	    	var validatecode = $('#validatecode').val();
 	    	if(validatecode.length != 4) {
@@ -150,10 +148,11 @@ $(document).ready(function() {
 				alert("验证码填写错误");
 				$('#validatecode_img').click();
 			}else {
-				var check = signUpCheck.checkSign();
+				/*var check = signUpCheck.checkSign();
 				if(check != true) {
-					alert("请检查你填写的信息是否正确！");
-				} else {
+					alert("请检查你填写的信息是否正确!");
+				} else {*/
+					//alert('1');
 					var url = $('#hide_site_url').val() + '/Sign_up/submitUser';
 					$.post(url,{
 						userName : $('#user_name').val(),
@@ -165,18 +164,19 @@ $(document).ready(function() {
 						userFirstSection : $('#first_section').val(),
 						userSecondSection : $('#second_section').val(),
 						userThirdSection : $('#third_section').val(),
-						user_talent : $('#user_talent')
+						user_talent : $('#user_talent').val()
 					},function(data) {
+						alert(data);
 						if(data == false) {
 							alert('"家"入失败！请仔细检查你填写的信息是否正确!');
 						} else {
-							var successInfo = eval("("+data+")");
+							/*var successInfo = eval("("+data+")");
 							$('#success_info').on('shown.bs.modal', function () {
 							  
-							})
+							})*/
 						}
 					});
-				}
+				//}
 			}
 	});
 });
