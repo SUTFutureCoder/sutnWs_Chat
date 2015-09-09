@@ -107,8 +107,7 @@
         </div>
     </form>
     <iframe name='file_frame' id="file_frame" style='display:none'></iframe>
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#success_info" style="display:none" >Large modal</button>
-    <?php require('success_info.html');?>
+    <?php require('success_info.php');?>
     <br/>
     <br/>
     <hr class="col-sm-10 col-sm-offset-1">

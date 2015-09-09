@@ -6,7 +6,8 @@ $(document).ready(function() {
 	  	userQQ : $('#user_qq'),
 	  	userNumber : $('#user_number'),
 	  	userMarjor : $('#user_major'),
-	  	userSex : $('#user_sex')
+	  	userSex : $('#user_sex'),
+	  	sectionWill : $('#section_will')
 	};
 
 	var checkReturn = {
@@ -14,7 +15,8 @@ $(document).ready(function() {
 		checkTelephone : false,
 		checkQQ : false,
 		checkNumber : false,
-		checkMarjor : false
+		checkMarjor : false,
+		sectionWill : false
 	};
 
 	var signUpCheck = {
@@ -25,7 +27,8 @@ $(document).ready(function() {
 
 	    checkSign : function() {
 	    	if(checkReturn.checkName && checkReturn.checkTelephone &&
-	    	 checkReturn.checkQQ && checkReturn.checkNumber && checkReturn.checkMarjor) {
+	    	 checkReturn.checkQQ && checkReturn.checkNumber && checkReturn.checkMarjor && 
+	    	 sectionWill) {
 	    		return true;
 	    	} else {
 	    		return false;
@@ -92,6 +95,18 @@ $(document).ready(function() {
 	    			checkReturn.userMarjor = false;
 	    		}
 	    	});
+
+	    	dom.sectionWill.on('click change', '.section_will_select', function(){
+	    	    var checkFirstSection = $('#first_section').val();
+	    	    var checkSceondSection = $('#second_section').val();
+	    	    var checkThirdSection = $('#third_section').val();
+	    	    if(checkFirstSection && checkSceondSection && checkThirdSection) {
+	    	    	checkReturn.sectionWill = true;
+	    	    } else {
+	    	    	checkReturn.sectionWill = false;
+	    	    }
+	    	});
+
 	    }
 	}
 
@@ -120,12 +135,18 @@ $(document).ready(function() {
 						userQQ : $('#user_qq').val(),
 						userNumber : $('#user_number').val(),
 						userMarjor : $('#user_major').val(),
-						userSex : $('#user_sex')
+						userSex : $('#user_sex').val(),
+						userFirstSection : $('#first_section').val(),
+						userSecondSection : $('#second_section').val(),
+						userThirdSection : $('#third_section').val()
 					},function(data) {
 						if(data == false) {
 							alert('"家"入失败！请仔细检查你填写的信息是否正确!');
 						} else {
 							var successInfo = eval("("+data+")");
+							$('#success_info').on('shown.bs.modal', function () {
+							  
+							})
 						}
 					});
 				}
