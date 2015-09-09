@@ -83,7 +83,7 @@ class Sign_up extends CI_Controller{
                     );
                     echo json_encode($data);
                 }else
-                    echo fasle;
+                    echo false;
             }else
                 echo false;
     }
@@ -102,7 +102,8 @@ class Sign_up extends CI_Controller{
         $saveandprint = false;//是否保存二维码并显示
         QRcode::png($text, $outfile, $level, $size, $margin, $saveandprint);
         $newfile = '/var/www/html/sutnWs_Chat/pqcode/'.$outfile; 
-        if(file_exists($newfile)&&rename($outfile,$newfile))
+        $result = rename($outfile,$newfile);
+        if(file_exists($newfile)&&$result)
             return true;
         else
             return false;
@@ -113,7 +114,7 @@ class Sign_up extends CI_Controller{
      *  
      * @access public
     */
-    public function file_upload(){
+    public function ajaxFileUpload(){
 
     }
 }
