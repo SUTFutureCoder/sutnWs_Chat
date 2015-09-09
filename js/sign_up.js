@@ -166,14 +166,13 @@ $(document).ready(function() {
 						userThirdSection : $('#third_section').val(),
 						user_talent : $('#user_talent').val()
 					},function(data) {
-						alert(data);
+						//alert(data);
 						if(data == false) {
 							alert('"家"入失败！请仔细检查你填写的信息是否正确!');
 						} else {
-							/*var successInfo = eval("("+data+")");
-							$('#success_info').on('shown.bs.modal', function () {
-							  
-							})*/
+							var successInfo = eval("("+data+")");
+							$('#pqcode').attr('src',successInfo.url);
+							$('#success_info_btu').click();
 						}
 					});
 				//}
