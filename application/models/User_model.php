@@ -24,4 +24,9 @@ class User_model extends CI_Model{
 		return $result->result_array();
 	}
 
+	public function save_user($data){
+		$this->load->database();
+		return $this->db->insert_id('user', $data);	
+	}
+
 }

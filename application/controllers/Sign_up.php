@@ -22,7 +22,7 @@ class Sign_up extends CI_Controller{
      *  
      * @access public
     */
-    public function user_num_check(){
+    public function checkNumber(){
     	$this->load->model('user_model');
     	$user_number = $this->input->post('user_number');
     	$data = $this->user_model->get_user($user_number);
@@ -37,8 +37,20 @@ class Sign_up extends CI_Controller{
      *  
      * @access public
     */
-    public function user_add_action(){
-    	$this->load->model('user_model');
-    	
+    public function submitUser(){
+            $this->load->model('user_model');
+            $data = array();
+            $data = (
+                    'userName' => mysql_real_escape_string($this->input->post('userName')),
+                    'userTelephone' => mysql_real_escape_string($this->input->post('userTelephone')),
+                    'userQQ' => mysql_real_escape_string($this->input->post('userQQ')),
+                    'userNumber' => mysql_real_escape_string($this->input->post('userNumber')),
+                    'userMarjor' => mysql_real_escape_string($this->input->post('userMarjor')),
+                    'userSex' => mysql_real_escape_string($this->input->post('userSex'))
+                    );
+            $user_id = $this->user_model->save_user($data);
+            
+            
+            
     }
 }
