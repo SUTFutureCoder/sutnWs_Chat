@@ -7,12 +7,12 @@
 </head>
 <body>
     <br/>        
-    <form class="form-horizontal col-sm-offset-1 col-sm-10">
+    <form class="form-horizontal col-sm-offset-1 col-sm-10" >
         <!--<hr class="col-sm-offset-2">-->
         <div class="basic_info">
         <div class="form-group">
             <label for="user_name" class="control-label">姓名</label>
-            <input type="text" class="form-control" aria-describedby="user_name" id="user_name">
+            <input type="text" class="form-control" aria-describedby="user_name" id="user_name" >
         </div>
         <div class="form-group">
             <label for="user_telephone" class="control-label">联系方式</label>
@@ -31,7 +31,7 @@
             <input type="text" class="form-control" aria-describedby="user_major" id="user_major">
         </div>
         
-        
+    
         <div class="form-group">
             <label for="user_sex" class="control-label">性别</label>
             <select class="form-control"  id="user_sex" >
@@ -102,11 +102,13 @@
         </div>
         <div class="form-group">
             <div class="col-sm-12">
-                <button type="button" class="btn btn-info btn-block" id="signUp_submit">"家"入网管</button>
+                <button type="submit" class="btn btn-info btn-block" id="signUp_submit">"家"入网管</button>
             </div>
         </div>
     </form>
     <iframe name='file_frame' id="file_frame" style='display:none'></iframe>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#success_info">Large modal</button>
+    <?php require('success_info.html');?>
     <br/>
     <br/>
     <hr class="col-sm-10 col-sm-offset-1">
@@ -158,10 +160,12 @@
         </div>
       </div>
     </footer>
+    <input type="hidden" id = "hide_site_url" name = "hide_site_url" value="<?= site_url();?>"/>
     <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
     <script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="<?= base_url('js/json.js')?>"></script>
     <script type="text/javascript" src="<?= base_url('js/jquery.form.js')?>"></script>
+    <script type="text/javascript" src="<?= base_url('js/sign_up.js')?>"></script>
     <script>
     (function(){
         var dom = {
@@ -193,6 +197,7 @@
                     var img = $(this);
                     img.attr('src', '<?= base_url('index.php/index/getagnomen')?>');
                 });
+
             }
         };
         signUp.init();
