@@ -75,7 +75,7 @@ $(document).ready(function() {
 	    		if(len != 9) {
 	    			checkReturn.userNumber =  false;
 	    		} else {
-	    			url = $('#hide_site_url').val() + '/Index/checkNumber';
+	    			url = $('#hide_site_url').val() + '/Sign_up/checkNumber';
 	    			$.post(url,{number:number},function(data) {
 	    				if(data == true) {
 	    					checkReturn.userNumber =  true;
@@ -100,7 +100,7 @@ $(document).ready(function() {
 	    	    var checkFirstSection = $('#first_section').val();
 	    	    var checkSceondSection = $('#second_section').val();
 	    	    var checkThirdSection = $('#third_section').val();
-	    	    if(checkFirstSection && checkSceondSection && checkThirdSection) {
+	    	    if(checkFirstSection) {
 	    	    	checkReturn.sectionWill = true;
 	    	    } else {
 	    	    	checkReturn.sectionWill = false;
@@ -128,7 +128,7 @@ $(document).ready(function() {
 				if(check != true) {
 					alert("请检查你填写的信息是否正确！");
 				} else {
-					var url = $('#hide_site_url').val() + '/Index/submitUser';
+					var url = $('#hide_site_url').val() + '/Sign_up/submitUser';
 					$.post(url,{
 						userName : $('#user_name').val(),
 						userTelephone : $('#user_telephone').val(),
