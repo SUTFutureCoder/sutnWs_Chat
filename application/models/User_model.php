@@ -20,8 +20,29 @@ class User_model extends CI_Model{
 
 	public function get_user($user_number){
 		$this->load->database();
-		$result = $this->db->get_where('user', array('user_number' => $user_number));
-		return $result->result_array();
+		return $this->db->where(array('user_number'=>$user_number))->get('user')->result_array();
+		 
+	}
+
+	public function user_sigin_up($user, $section){
+		$this->load->database();
+		$this->db->trans_start();
+		$user_id = $this->db->insert_id('user', $user);
+		foreach($section as $v):
+			if($v != 0){
+				$re_user_section = array(
+					"user_id" => $user_id,
+					"section_id" => $v,
+					"valid" => -1
+				);
+				$this->db->insert('user', $re_user_section);
+			}
+		endforeach;
+		$this->db->trans_complete();
+		if ($this->db->trans_status() === FALSE)
+			return false;
+		else
+			return $user_id;	
 	}
 
 }

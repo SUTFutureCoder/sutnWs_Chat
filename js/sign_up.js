@@ -16,7 +16,8 @@ $(document).ready(function() {
 		checkQQ : false,
 		checkNumber : false,
 		checkMarjor : false,
-		sectionWill : false
+		sectionWill : false,
+		checkValidatecode : false
 	};
 
 	var signUpCheck = {
@@ -28,7 +29,7 @@ $(document).ready(function() {
 	    checkSign : function() {
 	    	if(checkReturn.checkName && checkReturn.checkTelephone &&
 	    	 checkReturn.checkQQ && checkReturn.checkNumber && checkReturn.checkMarjor && 
-	    	 sectionWill && checkValidatecode) {
+	    	 checkReturn.sectionWill && checkReturn.checkValidatecode) {
 	    		return true;
 	    	} else {
 	    		return false;
@@ -37,13 +38,15 @@ $(document).ready(function() {
 
 	    checkValidatecode : function() {
 	    	var validatecode = $('#validatecode').val();
-	    	if(validatecode,length != 4) {
+	    	if(validatecode.length != 4) {
+	    		 checkReturn.checkValidatecode = false;
 	    		return false;
 	    	} else {
 	    		var url = $('#hide_site_url').val() + '/Sign_up/checkValidatecode';
 	    		$.post(url,{
 	    			validatecode : validatecode
 	    		},function(data) {
+	    			checkReturn.checkValidatecode = data;
 	    			return data;
 	    		});
 	    	}
