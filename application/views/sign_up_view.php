@@ -107,7 +107,7 @@
         </div>
     </form>
     <iframe name='file_frame' id="file_frame" style='display:none'></iframe>
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#success_info">Large modal</button>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#success_info" style="display:none" >Large modal</button>
     <?php require('success_info.html');?>
     <br/>
     <br/>
