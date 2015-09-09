@@ -53,32 +53,39 @@ class Sign_up extends CI_Controller{
     */
     public function submitUser(){
             $this->load->model('user_model');
+            $this->load->helper('url');
             $user_info = array(
-                    'user_name' => mysql_real_escape_string($this->input->post('userName')),
-                    'user_telephone' => mysql_real_escape_string($this->input->post('userTelephone')),
-                    'userQQ' => mysql_real_escape_string($this->input->post('userQQ')),
-                    'user_number' => mysql_real_escape_string($this->input->post('userNumber')),
-                    'user_marjor' => mysql_real_escape_string($this->input->post('userMarjor')),
-                    'user_sex' => mysql_real_escape_string($this->input->post('userSex'))
+                    'user_name' => $this->input->post('userName'),
+                    'user_telephone' => $this->input->post('userTelephone'),
+                    'user_qq' => $this->input->post('userQQ'),
+                    'user_number' => $this->input->post('userNumber'),
+                    'user_major' => $this->input->post('userMajor'),
+                    'user_sex' => $this->input->post('userSex'),
+                    'user_talent' => $this->input->post('user_talent')
                     );
             $user_sec_info = array(
-                    'userFirstSection' => mysql_real_escape_string($this->input->post('userFirstSection')),
-                    'userSecondSection' => mysql_real_escape_string($this->input->post('userSecondSection')),
-                    'userThirdSection' => mysql_real_escape_string($this->input->post('userThirdSection'))
+                    'userFirstSection' => $this->input->post('userFirstSection'),
+                    'userSecondSection' => $this->input->post('userSecondSection'),
+                    'userThirdSection' => $this->input->post('userThirdSection')
                     );
+            
+           $user_id = $this->user_model->user_sign_up($user_info, $user_sec_info);
+                 if($user_id ){
+                $url = base_url().'qpcode/'.$user_id.'png';
+                
+                $text = site_url().'/interviemer/index?user_id='.$user_id.'&userName='.$user_info['user_name'].'&userTelephone='.$user_info['user_telephone'].'&userQQ='.$user_info['user_qq'].'&userNumber='.$user_info['user_number'].'&userMajor='.$user_info['user_major'].'&userSex='.$user_info['user_sex'].'&user_talent='.$user_info['user_talent'];
 
-            $user_id = $this->user_model->user_sigin_up($user_info, $user_sec_info);
-            if($result){
-                $url = base_url().'/qpcode/'.$user_id.'png';
-                $text = site_url().'/interviemer/index?user_id='.$user_id.'?user_name='.$user_info['user_name'].'?user_telephone='.$user_info['user_telephone'].'?userQQ='.$user_info['userQQ'].'?user_number='.$user_info['user_number'].'?user_marjor='.$user_info['user_marjor'].'?user_sex='.$user_info['user_sex'];
-                $this->create_QRCode($text, $user_id);
-                $data = array(
-                    'url' => $url,
-                    'user_id' => $user_id
+                $result = $this->create_QRCode($text, $user_id);
+                if($result){
+                    $data = array(
+                        'url' => $url,
+                        'user_id' => $user_id
                     );
-                echo json_encode($data);
+                    echo json_encode($data);
+                }else
+                    echo fasle;
             }else
-                echo fasle;      
+                echo false;
     }
 
     /**    
@@ -88,15 +95,25 @@ class Sign_up extends CI_Controller{
     */
     private function create_QRCode($text, $filename){
         require_once(BASEPATH.'libraries/Phpqrcode.php');
-        $outfile = 'qpcode/'.$filename.'png';//是否输出二维码图片 文件
+        $outfile = $filename.'.png';//是否输出二维码图片 文件
         $level = "M";//容错率
         $size = 4;//表示生成图片大小    
         $margin = 4;//二维码周围边框空白区域间距值
-        $saveandprint = fasle;//是否保存二维码并显示
+        $saveandprint = false;//是否保存二维码并显示
         QRcode::png($text, $outfile, $level, $size, $margin, $saveandprint);
-        if(file_exists($outfile))
+        $newfile = '/var/www/html/sutnWs_Chat/pqcode/'.$outfile; 
+        if(file_exists($newfile)&&rename($outfile,$newfile))
             return true;
         else
-            return fasle;
+            return false;
+    }
+
+    /**    
+     *  上传文件    
+     *  
+     * @access public
+    */
+    public function file_upload(){
+
     }
 }
