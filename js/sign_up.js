@@ -115,9 +115,18 @@ $(document).ready(function() {
 				} else {
 					var url = $('#hide_site_url').val() + '/Index/submitUser';
 					$.post(url,{
-
-					},function() {
-
+						userName : $('#user_name').val(),
+						userTelephone : $('#user_telephone').val(),
+						userQQ : $('#user_qq').val(),
+						userNumber : $('#user_number').val(),
+						userMarjor : $('#user_major').val(),
+						userSex : $('#user_sex')
+					},function(data) {
+						if(data == false) {
+							alert('"家"入失败！请仔细检查你填写的信息是否正确!');
+						} else {
+							var successInfo = eval("("+data+")");
+						}
 					});
 				}
 			}
