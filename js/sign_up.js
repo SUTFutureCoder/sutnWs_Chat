@@ -159,7 +159,7 @@ $(document).ready(function() {
 						userTelephone : $('#user_telephone').val(),
 						userQQ : $('#user_qq').val(),
 						userNumber : $('#user_number').val(),
-						userMarjor : $('#user_major').val(),
+						userMajor : $('#user_major').val(),
 						userSex : $('#user_sex').val(),
 						userFirstSection : $('#first_section').val(),
 						userSecondSection : $('#second_section').val(),

@@ -24,25 +24,28 @@ class User_model extends CI_Model{
 		 
 	}
 
-	public function user_sigin_up($user, $section){
+	public function user_sign_up($user, $section){
 		$this->load->database();
-		$this->db->trans_start();
-		$user_id = $this->db->insert_id('user', $user);
-		foreach($section as $v):
-			if($v != 0){
-				$re_user_section = array(
-					"user_id" => $user_id,
-					"section_id" => $v,
-					"valid" => -1
-				);
-				$this->db->insert('user', $re_user_section);
-			}
-		endforeach;
-		$this->db->trans_complete();
-		if ($this->db->trans_status() === FALSE)
-			return false;
-		else
-			return $user_id;	
+		$result = $this->db->insert('user', $user);
+		
+		if($result){
+			$a = $this->db->where(array('user_number'=>$user['user_number']))->get('user')->result_array();
+			$user_id = $a[0]['user_id'];
+			foreach($section as $v):
+				if($v != 0){
+					$re_user_section = array(
+						"user_id" => $user_id,
+						"section_id" => $v,
+						"valid" => 0
+					);
+					$this->db->insert('re_user_section', $re_user_section);
+				}
+			endforeach;
+			if ($user_id)
+				return $user_id;
+			else
+				return false;
+		}	
 	}
 
 }
