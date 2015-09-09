@@ -20,18 +20,28 @@ class Interviewer extends CI_Controller{
     }
 
     /**    
-     *  扫面二维码
+     *  扫描二维码
      *  
      * @access public
     */
+   	private $userInfo = array(
+    		'user_id' => false,
+    		'user_name' => false,
+    		'user_namber' => false,
+    		'user_qq' => false,
+    		'user_major' => false,
+    		'user_sex' => false,
+    		'user_telephone' => false,
+    		'user_telephone' => false,
+    		'user_telephone' => false,
+    		'first_section' => false,
+    		'second_section' => false,
+    		'third_section' => false,
+    		'user_talent' => false
+    		);
+
     public function index(){
-    	header('Content-Type:text/html;charset=utf-8');
-    	echo "<script type='text/javascript'> 
-    	var pwd = prompt('请输入密码');
-    	var name = interviewerPwd;
-    	document.cookie= interviewerPwd + '=' +escape(pwd)+;
-    	</script>";
-    	
+    	//$this->load->model('section');
     	$userInfo = array(
     		'user_id' => $this->input->get('user_id',TRUE),
     		'user_name' => $this->input->get('user_name',TRUE),
@@ -39,13 +49,13 @@ class Interviewer extends CI_Controller{
     		'user_qq' => $this->input->get('user_qq',TRUE),
     		'user_major' => $this->input->get('user_major',TRUE),
     		'user_sex' => $this->input->get('user_sex',TRUE),
-    		'user_telephone' => $this->input->get('user_telephone',TRUE),
-    		'user_telephone' => $this->input->get('user_telephone',TRUE),
-    		'user_telephone' => $this->input->get('user_telephone',TRUE),
     		'first_section' => $this->input->get('first_section',TRUE),
     		'second_section' => $this->input->get('second_section',TRUE),
-    		'third_section' => $this->input->get('third_section',TRUE)
+    		'third_section' => $this->input->get('third_section',TRUE),
+    		'user_talent' => $this->input->get('user_talent',TRUE)
     		);
+    	$this->load->helper('url');
+    	$this->load->view('interviewer_login');
        	//self::showInterviewer();
     }
 
@@ -54,13 +64,51 @@ class Interviewer extends CI_Controller{
      *  
      * @access public
     */
-   private function showInterviewer() {
-   		$this->load->helper('url');
+   private function showInterviewer($section) {
+   	/*	$this->load->helper('url');
    		$this->load->model('section');
    		$sectionList = $this->section->getSectionList();
    		$this->load->view('interviewer', array(
    		    'sectionList' => $sectionList,
-   		));
+   		    'userInfo' => $this->userInfo(),
+   		    'section' => $section,
+   		));*/
+   }
+
+   /**    
+    *  面试官密码验证
+    *  
+    * @access public
+   */
+   public function checkPwd() {
+   		$interviewerPwd = $this->input->post('interviewerPwd',TRUE);
+   		if(!isset($interviewerPwd)) {
+   			self::index();
+   		}
+   		switch ($interviewerPwd) {
+   			case 'nwsxuanchuan':
+   				self::showInterviewer('1');
+   				break;	
+   			case 'nwswailian' :
+   				self::showInterviewer('2');
+   				break;
+   			case 'nwscaibian' :
+   				self::showInterviewer('3');
+   				break;	
+   			case 'nwscehua' :
+   				self::showInterviewer('4');
+   				break;
+   			case 'nwsyinyin' :
+   				self::showInterviewer('5');
+   				break;
+   			case 'nwsjishu':
+   				self::showInterviewer('6');
+   				break;	
+   			default:
+   				echo false;
+   				break;
+   		}
+
    }
 
 }
