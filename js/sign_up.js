@@ -171,8 +171,10 @@ $(document).ready(function() {
 							alert('"家"入失败！请仔细检查你填写的信息是否正确!');
 						} else {
 							var successInfo = eval("("+data+")");
+							$('#span_success_id').text(successInfo.user_id);
 							$('#pqcode').attr('src',successInfo.url);
-							$('#success_info_btu').click();
+							$('#success_info_but').click();
+
 						}
 					});
 				//}
