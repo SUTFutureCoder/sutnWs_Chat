@@ -37,6 +37,7 @@ class Section extends CI_Model{
             }
             $this->myredis->set($this->redisSectionList, serialize($data));
         }
+        //echo '<pre>';print_r($data);'</pre>';die;
         return $data;
     }
 }
