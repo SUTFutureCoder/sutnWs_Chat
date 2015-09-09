@@ -25,10 +25,13 @@ class Interviewer extends CI_Controller{
      * @access public
     */
     public function index(){
-    	$pwd = 1;
     	header('Content-Type:text/html;charset=utf-8');
-    	echo "<script type='text/javascript'> prompt('请输入密码');</script>";
-    	echo $pwd;die;
+    	echo "<script type='text/javascript'> 
+    	var pwd = prompt('请输入密码');
+    	var name = interviewerPwd;
+    	document.cookie= interviewerPwd + '=' +escape(pwd)+;
+    	</script>";
+    	
     	$userInfo = array(
     		'user_id' => $this->input->get('user_id',TRUE),
     		'user_name' => $this->input->get('user_name',TRUE),
