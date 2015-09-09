@@ -71,7 +71,7 @@ class Sign_up extends CI_Controller{
             
            $user_id = $this->user_model->user_sign_up($user_info, $user_sec_info);
                  if($user_id ){
-                $url = base_url().'qpcode/'.$user_id.'png';
+                $url = base_url().'pqcode/'.$user_id.'png';
                 
                 $text = site_url().'/interviemer/index?user_id='.$user_id.'&userName='.$user_info['user_name'].'&userTelephone='.$user_info['user_telephone'].'&userQQ='.$user_info['user_qq'].'&userNumber='.$user_info['user_number'].'&userMajor='.$user_info['user_major'].'&userSex='.$user_info['user_sex'].'&user_talent='.$user_info['user_talent'];
 
@@ -115,6 +115,24 @@ class Sign_up extends CI_Controller{
      * @access public
     */
     public function ajaxFileUpload(){
-
+        $path = "/var/www/html/sutnWs_Chat/file_upload/";
+        $config = array(
+            'upload_path' => $path,
+            'allowed_types' => $types,
+            'max_size' => 10240,
+            'file_name' => $file_name
+            );
+        $this->load->library('upload',$config);
+        $this->upload->initialize($config);
+        $aimurl = "$path/$file_name";
+        if (file_exists($aimurl)) { 
+                        unlink($aimurl);
+                }
+        $result = $this->upload->do_upload($cof['name']);
+        if($result) return true;
+        else {
+             $error = array('error' => $this->upload->display_errors());
+             return $error;
+        }
     }
 }
