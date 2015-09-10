@@ -86,7 +86,7 @@
             <textarea class="form-control" rows="5" id="user_talent"></textarea>
         </div>
     </form>
-    <form action="<?= base_url('index.php/sign_up/ajaxFileUpload')?>" id="file_upload" class="form-horizontal col-sm-10 col-sm-offset-1" id="form1" name="form1" encType="multipart/form-data"  method="post" target="file_frame">
+    <form action="<?= base_url('index.php/sign_up/ajaxFileUpload')?>" id="file_upload" class="form-horizontal col-sm-10 col-sm-offset-1" id="form1" name="form1" encType="multipart/form-data"  method="post" target="file_frame" onclick="return get_number()">
         <div class="form-group">
             <label for="file" class="col-sm-2 control-label">作品材料【选填】</label>
             <div class="col-sm-9">
@@ -167,6 +167,15 @@
     <script type="text/javascript" src="<?= base_url('js/jquery.form.js')?>"></script>
     <script type="text/javascript" src="<?= base_url('js/sign_up.js')?>"></script>
     <script>
+    function get_number(){
+        if($('#user_number').val() == undefined){
+            return false;
+        }
+        else{
+            $('#file_user_number').val($('#user_number').val());
+            return true;
+        }
+    }
     (function(){
         var dom = {
             basicInfo : $('#basic_info'),

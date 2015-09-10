@@ -73,7 +73,7 @@ class Sign_up extends CI_Controller{
                  if($user_id ){
                 $url = base_url().'pqcode/'.$user_id.'.png';
                 
-                $text = site_url().'/interviemer/index?user_id='.$user_id.'&userName='.$user_info['user_name'].'&userTelephone='.$user_info['user_telephone'].'&userQQ='.$user_info['user_qq'].'&userNumber='.$user_info['user_number'].'&userMajor='.$user_info['user_major'].'&userSex='.$user_info['user_sex'].'&user_talent='.$user_info['user_talent'];
+                $text = site_url().'/interviemer/index?user_id='.$user_id.'&userName='.$user_info['user_name'].'&userTelephone='.$user_info['user_telephone'].'&userQQ='.$user_info['user_qq'].'&userNumber='.$user_info['user_number'].'&userMajor='.$user_info['user_major'].'&userSex='.$user_info['user_sex'].'&user_talent='.$user_info['user_talent'].'&userFirstSection='.$user_sec_info['userFirstSection'].'&userSecondSection='.$user_sec_info['userSecondSection'].'&userThirdSection='.$user_sec_info['userThirdSection'].;
 
                 $result = $this->create_QRCode($text, $user_id);
                 if($result){
@@ -97,7 +97,7 @@ class Sign_up extends CI_Controller{
         require_once(BASEPATH.'libraries/Phpqrcode.php');
         $outfile = $filename.'.png';//是否输出二维码图片 文件
         $level = "M";//容错率
-        $size = 4;//表示生成图片大小    
+        $size = 4;//表示生成图片大小
         $margin = 4;//二维码周围边框空白区域间距值
         $saveandprint = false;//是否保存二维码并显示
         QRcode::png($text, $outfile, $level, $size, $margin, $saveandprint);
@@ -118,21 +118,18 @@ class Sign_up extends CI_Controller{
         $path = "/var/www/html/sutnWs_Chat/file_upload/";
         $config = array(
             'upload_path' => $path,
-            'allowed_types' => $types,
+            
             'max_size' => 10240,
-            'file_name' => $file_name
+            'file_name' => $this->input->post('file_user_number')
             );
         $this->load->library('upload',$config);
-        $this->upload->initialize($config);
-        $aimurl = "$path/$file_name";
+        $arr = explode('.', $_FILES["file"]["name"]);
+        $_file = end($arr);
+        $aimurl = $path.$config['file_name'].'.'.$_file;
         if (file_exists($aimurl)) { 
                         unlink($aimurl);
-                }
-        $result = $this->upload->do_upload($cof['name']);
-        if($result) return true;
-        else {
-             $error = array('error' => $this->upload->display_errors());
-             return $error;
         }
-    }
+        $this->upload->do_upload('file');
+        echo "<span hidden='hidden' id='error_fileUpload' >".$_FILES['file']['error']."</span>";
+        }
 }

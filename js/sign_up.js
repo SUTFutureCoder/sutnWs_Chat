@@ -172,6 +172,8 @@ $(document).ready(function() {
 						} else {
 							var successInfo = eval("("+data+")");
 							$('#pqcode').attr('src',successInfo.url);
+							var error = $(window.frames["file_frame"].document).find("#error_fileUpload").val();
+							if(error != 0) alert("文件上传失败");
 							$('#success_info_btu').click();
 						}
 					});
