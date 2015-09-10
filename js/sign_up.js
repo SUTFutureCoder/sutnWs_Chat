@@ -140,7 +140,8 @@ $(document).ready(function() {
 			} else if(checkReturn.checkQQ == false) {
 				alert("请检查QQ填写是否正确");
 			} else if(checkReturn.checkNumber == false) {
-				alert(checkReturn.checkNumber);
+				//alert(checkReturn.checkNumber);
+				alert("请检查学号填写是否正确");
 			} else if(checkReturn.checkMarjor == false) {
 				alert("请检查专业填写是否正确");
 			} else if(checkReturn.sectionWill == false){
