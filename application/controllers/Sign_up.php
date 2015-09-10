@@ -73,7 +73,7 @@ class Sign_up extends CI_Controller{
                  if($user_id ){
                 $url = base_url().'pqcode/'.$user_id.'.png';
                 
-                $text = site_url().'/interviemer/index?user_id='.$user_id.'&userName='.$user_info['user_name'].'&userTelephone='.$user_info['user_telephone'].'&userQQ='.$user_info['user_qq'].'&userNumber='.$user_info['user_number'].'&userMajor='.$user_info['user_major'].'&userSex='.$user_info['user_sex'].'&user_talent='.$user_info['user_talent'].'&userFirstSection='.$user_sec_info['userFirstSection'].'&userSecondSection='.$user_sec_info['userSecondSection'].'&userThirdSection='.$user_sec_info['userThirdSection'].;
+                $text = site_url().'/interviewer/index?user_id='.$user_id.'&userName='.$user_info['user_name'].'&userTelephone='.$user_info['user_telephone'].'&userQQ='.$user_info['user_qq'].'&userNumber='.$user_info['user_number'].'&userMajor='.$user_info['user_major'].'&userSex='.$user_info['user_sex'].'&user_talent='.$user_info['user_talent'].'&userFirstSection='.$user_sec_info['userFirstSection'].'&userSecondSection='.$user_sec_info['userSecondSection'].'&userThirdSection='.$user_sec_info['userThirdSection'];
 
                 $result = $this->create_QRCode($text, $user_id);
                 if($result){
