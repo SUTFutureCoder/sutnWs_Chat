@@ -134,10 +134,22 @@ class Interviewer extends CI_Controller{
     * @access public
    */
    public function userScore() {
-   	$user_id = $this->input->post('user_id',TRUE);
-   	$section_id = $this->input->post('section_id',TRUE);
-   	$user_score = $this->input->post('user_score',TRUE);
-   	$this->session->unset_userdata('interviewerSection');
+      $this->load->helper('url');
+      if($this->session->userdata('interviewerSection')) {
+           $this->load->model('user_model');
+            $data['user_id'] = $this->input->post('user_id',TRUE);
+            $data['section_id'] = $this->input->post('section_id',TRUE);
+            $data['user_score'] = $this->input->post('user_score',TRUE);
+           $result = $this->user_model->InterviewerScore($data);
+           if($result) {
+              
+           } else {
+
+           }
+         }else {
+            redirect('Index/index');
+      }
+      $this->session->unset_userdata('interviewerSection');
    }
 
 }

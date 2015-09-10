@@ -108,7 +108,7 @@
     </form>
     <iframe name='file_frame' id="file_frame" style='display:none'></iframe>
     <?php require('success_info.php');?>
-    <button type="button" class="btn btn-primary " data-toggle="modal"   data-target="#success_info" id="success_info_btu" aria-hidden="ture" style='display:none'></button>
+    <button type="button" class="btn btn-primary " data-toggle="modal"  data-backdrop="" data-target="#success_info" id = "success_info_but" aria-hidden="ture" style='display:none'></button>
     <br/>
     <br/>
     <hr class="col-sm-10 col-sm-offset-1">
