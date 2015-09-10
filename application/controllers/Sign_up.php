@@ -101,8 +101,8 @@ class Sign_up extends CI_Controller{
         $margin = 4;//二维码周围边框空白区域间距值
         $saveandprint = false;//是否保存二维码并显示
         QRcode::png($text, $outfile, $level, $size, $margin, $saveandprint);
-        $newfile = '/var/www/html/sutnWs_Chat/pqcode/'.$outfile; 
-        $result = rename($outfile,$newfile);
+        $newfile = '/alidata/www/wx.sutapp.com/pqcode/'.$outfile; 
+        $result = rename($outfile,$newfile);                        
         if(file_exists($newfile)&&$result)
             return true;
         else
@@ -115,7 +115,7 @@ class Sign_up extends CI_Controller{
      * @access public
     */
     public function ajaxFileUpload(){
-        $path = "/var/www/html/sutnWs_Chat/file_upload/";
+        $path = "/alidata/www/wx.sutapp.com/file_upload/";
         $config = array(
             'upload_path' => $path,
             
