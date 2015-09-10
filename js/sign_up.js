@@ -88,7 +88,7 @@ $(document).ready(function() {
 	    	dom.userNumber.bind('input propertychange blur',function() {
 	    		var number = $(this).val();
 	    		var len = number.length;
-	    		if(len != 9) {
+	    		if(len == 0) {
 	    			checkReturn.checkNumber =  false;
 	    		} else {
 	    			//checkReturn.checkNumber =  true;
@@ -99,6 +99,7 @@ $(document).ready(function() {
 	    				} else {
 	    					checkReturn.checkNumber =  false;
 	    				}
+	    				checkReturn.checkNumber =  data;
 	    			});
 	    		}
 	    	});
@@ -139,7 +140,7 @@ $(document).ready(function() {
 			} else if(checkReturn.checkQQ == false) {
 				alert("请检查QQ填写是否正确");
 			} else if(checkReturn.checkNumber == false) {
-				alert("请检查学号填写是否正确");
+				alert(checkReturn.checkNumber);
 			} else if(checkReturn.checkMarjor == false) {
 				alert("请检查专业填写是否正确");
 			} else if(checkReturn.sectionWill == false){
@@ -175,7 +176,7 @@ $(document).ready(function() {
 							$('#pqcode').attr('src',successInfo.url);
 							var error = $(window.frames["file_frame"].document).find("#error_fileUpload").val();
 							if(error != 0) alert("文件上传失败");
-							$('#success_info_btu').click();
+							$('#success_info_but').click();
 						}
 					});
 				//}

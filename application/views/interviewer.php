@@ -49,12 +49,9 @@
     <label for="user_talent" class="control-label">特长</label>
     <textarea class="form-control" rows="5" id="user_talent" disabled><?= $userInfo['user_talent'];?></textarea>
 </div>
-<div class="form-group">
-    <label for="file_img" class="control-label">作品材料</label>
-    <img src="<?= $userInfo['img_address'];?>" alt="" id = "file_img">
+
 </div>
-</div>
-<form  action="<?= site_url('Interviewer/userScore');?>" method="post">
+<form >
     <div class="form-group">
         <label for="file_img" class="control-label"><?= $section;?>面试官打分</label>
         <input type="text"  class="form-control" aria-describedby="user_score" id="user_score" name="user_score">
@@ -63,7 +60,7 @@
     </div>
     <div class="form-group">
                 <div class="col-sm-12">
-                    <button type="submit" class="btn btn-info btn-block" id="signUp_submit">确定</button>
+                    <button class="form-control btn btn-primary" type="button" id="interviewerScore"  >确定</button>
                 </div>
             </div>
 </form>
@@ -120,5 +117,26 @@
     </div>
   </div>
 </footer>
+<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+<script>
+$(document).ready(function() {
+  $('#interviewerScore').click(function() {
+
+    $.post('<?= site_url('Interviewer/userScore')?>',{
+        user_id : $('#user_id').val(),
+        section_id : $('#section_id').val(),
+        user_score : $('#user_score').val()
+    },function(data) {
+      //alert(data);
+        if(data != true) {
+          alert('打分失败！');
+        } else {
+          alert('打分成功');
+        }
+      }); 
+    });   
+
+});
+</script>
 </body>
 </html>

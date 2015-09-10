@@ -48,4 +48,22 @@ class User_model extends CI_Model{
 		}	
 	}
 
+	/**    
+	 *  @Purpose:    
+	 * 面试官打分
+	 *     
+	 *  @Method Name:
+	 *  getRule
+	 *  @Parameter: 
+	 * 
+	 *  @Return: 
+	 *  
+	*/
+	public function InterviewerScore($data) {
+		$this->load->database();
+		$this->db->where(array('user_id'=>$data['user_id'],'section_id'=>$data['section_id']))->update('re_user_section',array('score'=>$data['user_score']));
+
+		return $this->db->affected_rows();
+	}
+
 }
