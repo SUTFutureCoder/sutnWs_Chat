@@ -55,7 +55,7 @@
     <div class="form-group">
         <label for="file_img" class="control-label"><?= $section;?>面试官打分</label>
         <input type="text"  class="form-control" aria-describedby="user_score" id="user_score" name="user_score">
-        <input type="hidden" class="form-control" name="section_id" id = "interviewerSection" value="<?= $section_id;?>" >
+        <input type="hidden" class="form-control" name="section_id" id = "section_id" value="<?= $section_id;?>" >
         <input type="hidden" class="form-control" name="user_id" id = "user_id" value="<?= $userInfo['user_id'];?>">
     </div>
     <div class="form-group">
