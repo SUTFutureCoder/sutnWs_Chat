@@ -40,4 +40,16 @@ class Section extends CI_Model{
         //echo '<pre>';print_r($data);'</pre>';die;
         return $data;
     }
+
+     /**
+     * 获取单个部门
+     * 
+     * @access public
+     * @return 
+     */
+     public function getSection($section_id){ 
+        $this->load->database();
+        $data = $this->db->select('section_name')->get_where('section', array('section_id'=>$section_id))->result_array();
+        return $data;
+     }
 }

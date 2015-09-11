@@ -24,9 +24,9 @@ class Interviewer extends CI_Controller{
      *  
      * @access public
     */
-   	private $userInfo = array(
+   	/*private $userInfo = array(
     		'user_id' => false,
-    		'user_name' => false,
+    		'user_name' => 'yin',
     		'user_number' => false,
     		'user_qq' => false,
     		'user_major' => false,
@@ -37,11 +37,12 @@ class Interviewer extends CI_Controller{
     		'third_section' => false,
     		'user_talent' => false,
     		'img_address' => false
-    		);
+    		);*/
 
     public function index(){
+      //http://localhost/sutnWs_Chat/index.php/Interviewer/index?user_id=130405212&user_name=nijjj&user_number=130405212&user_qq=123666&user_major=kkkkk&user_sex=男&first_section=1&second_section=&third_section=
     	//$this->load->model('section');
-    	$userInfo = array(
+    /*	$userInfo = array(
     		'user_id' => $this->input->get('user_id',TRUE),
     		'user_name' => $this->input->get('user_name',TRUE),
     		'user_number' => $this->input->get('user_number',TRUE),
@@ -53,7 +54,7 @@ class Interviewer extends CI_Controller{
     		'third_section' => $this->input->get('third_section',TRUE),
     		'user_talent' => $this->input->get('user_talent',TRUE),
     		'img_address' => $this->input->get('img_address',TRUE)
-    		);
+    		);*/
     	$this->load->helper('url');
     	$this->load->view('interviewer_login');
        	//self::showInterviewer();
@@ -65,8 +66,49 @@ class Interviewer extends CI_Controller{
      * @access public
     */
    public function showInterviewer() {
+    $userInfo = array(
+            'user_id' => false,
+            'user_name' => false,
+            'user_number' =>false,
+            'user_telephone' =>false,
+            'user_qq' => false,
+            'user_major' => false,
+            'user_sex' =>false,
+            'first_section' => false,
+            'second_section' => false,
+            'third_section' => false,
+            'user_talent' => false
+      );
+    $userInfo = array(
+            'user_id' => $this->input->get('user_id',TRUE),
+            'user_name' => urldecode($this->input->get('userName',TRUE)),
+            'user_number' => $this->input->get('userNumber',TRUE),
+            'user_qq' => $this->input->get('userQQ',TRUE),
+            'user_telephone' =>$this->input->get('userTelephone',TRUE),
+            'user_major' => urldecode($this->input->get('userMajor',TRUE)),
+            'user_sex' => urldecode($this->input->get('userSex',TRUE)),
+            'first_section' => $this->input->get('userFirstSection',TRUE),
+            'second_section' => $this->input->get('userSecondSection',TRUE),
+            'third_section' => $this->input->get('userThirdSection',TRUE),
+            'user_talent' => urldecode($this->input->get('user_talent',TRUE))
+      );
+      $this->load->model('section');
+      //$sectionList = $sectionList = $this->section->getSectionList();
+      $userInfo['first_section'] = $this->section->getSection($userInfo['first_section'])[0]['section_name'];
+      if($userInfo['second_section'] != 0) {
+        $userInfo['second_section'] = $this->section->getSection($userInfo['second_section'])[0]['section_name'];
+      } else {
+        $userInfo['second_section'] = null;
+      }
+      if($userInfo['third_section'] != 0) {
+        $userInfo['third_section'] = $this->section->getSection($userInfo['second_section'])[0]['section_name']; 
+      } else {
+         $userInfo['third_section'] = null;
+      }
+      $sexList = array('男','女','其他','保密');
+      $userInfo['user_sex'] = $sexList[$userInfo['user_sex']];
    		$this->load->library('session');
-   		$section_id = $this->input->get('session',TRUE);
+   		$section_id = $this->input->get('section',TRUE);
    		$section = $this->session->userdata('interviewerSection');
    		$this->load->helper('url');
    		$this->load->model('section');
@@ -76,7 +118,7 @@ class Interviewer extends CI_Controller{
    			$sectionList = $this->section->getSectionList();
    			$this->load->view('interviewer', array(
    			    'sectionList' => $sectionList,
-   			    'userInfo' => $this->userInfo,
+   			    'userInfo' => $userInfo,
    			    'section_id' => $section_id,
    			    'section' => $section
    			)); 
@@ -135,19 +177,22 @@ class Interviewer extends CI_Controller{
    */
    public function userScore() {
       $this->load->helper('url');
+      $this->load->library('session');
       if($this->session->userdata('interviewerSection')) {
            $this->load->model('user_model');
             $data['user_id'] = $this->input->post('user_id',TRUE);
             $data['section_id'] = $this->input->post('section_id',TRUE);
             $data['user_score'] = $this->input->post('user_score',TRUE);
            $result = $this->user_model->InterviewerScore($data);
-           if($result) {
-              
+           //$result = true;
+           if($result > 0) {
+              echo true;
            } else {
-
+              echo false;
            }
+           //echo $data['section_id'];
          }else {
-            redirect('Index/index');
+            echo false;
       }
       $this->session->unset_userdata('interviewerSection');
    }
