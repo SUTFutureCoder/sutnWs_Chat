@@ -178,6 +178,8 @@ $(document).ready(function() {
 							var error = $(window.frames["file_frame"].document).find("#error_fileUpload").val();
 							if(error != 0) alert("文件上传失败");
 							$('#success_info_but').click();
+							checkReturn.checkNumber = false;
+
 						}
 					});
 				//}

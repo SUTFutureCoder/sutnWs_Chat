@@ -101,12 +101,29 @@ class Interviewer extends CI_Controller{
         $userInfo['second_section'] = null;
       }
       if($userInfo['third_section'] != 0) {
-        $userInfo['third_section'] = $this->section->getSection($userInfo['second_section'])[0]['section_name']; 
+        $userInfo['third_section'] = $this->section->getSection($userInfo['third_section'])[0]['section_name']; 
       } else {
          $userInfo['third_section'] = null;
       }
-      $sexList = array('男','女','其他','保密');
-      $userInfo['user_sex'] = $sexList[$userInfo['user_sex']];
+      //$sexList = array('男','女','其他','保密');
+      //$userInfo['user_sex'] = $sexList[$userInfo['user_sex']];
+      switch ($userInfo['user_sex']) {
+        case '0' : 
+          $userInfo['user_sex'] = "男";
+          break;
+        case '1' :
+          $userInfo['user_sex'] = "女";
+          break;
+        case '2' :
+          $userInfo['user_sex'] = "其他";
+          break;
+        case '3' :
+          $userInfo['user_sex'] = "保密";
+          break;
+        default :
+          $userInfo['user_sex'] = "性别选择错误";
+          break;
+      };
    		$this->load->library('session');
    		$section_id = $this->input->get('section',TRUE);
    		$section = $this->session->userdata('interviewerSection');
@@ -183,16 +200,21 @@ class Interviewer extends CI_Controller{
             $data['user_id'] = $this->input->post('user_id',TRUE);
             $data['section_id'] = $this->input->post('section_id',TRUE);
             $data['user_score'] = $this->input->post('user_score',TRUE);
+            if(!ctype_digit($data['user_score'])) {
+              echo json_encode(array('code' => -1, 'message' => '分数不合法'));
+              return;
+            }
            $result = $this->user_model->InterviewerScore($data);
            //$result = true;
+           //echo $data['user_score'];
            if($result > 0) {
-              echo true;
+              echo json_encode(array('code' => 1, 'message' => '打分成功'));
            } else {
-              echo false;
+              echo json_encode(array('code' => -1, 'message' => '该同学分数已打或是没有填写本部门'));
            }
            //echo $data['section_id'];
          }else {
-            echo false;
+            echo json_encode(array('code' => -1, 'message' => '请先登录'));
       }
       $this->session->unset_userdata('interviewerSection');
    }
