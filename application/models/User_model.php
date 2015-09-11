@@ -61,8 +61,10 @@ class User_model extends CI_Model{
 	*/
 	public function InterviewerScore($data) {
 		$this->load->database();
-		$this->db->query("update re_user_section set score='$data[user_score]' where user_id='$data[user_id]' and section_id = '$data[section_id]' ");
-
+		//$this->db->query("update re_user_section set score='$data[user_score]' where user_id='$data[user_id]' and section_id = '$data[section_id]' ");
+		$this->db->where('user_id',$data['user_id']);
+		$this->db->where('section_id',$data['section_id']);
+		$this->db->update('re_user_section',array('score'=>$data['user_score']));
 		return $this->db->affected_rows();
 	}
 

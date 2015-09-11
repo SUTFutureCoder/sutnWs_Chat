@@ -11,43 +11,43 @@
 <div class="basic_info">
 <div class="form-group">
     <label for="user_name" class="control-label">姓名</label>
-    <input type="text" class="form-control" aria-describedby="user_name" id="user_name" value="<?= $userInfo['user_name'];?>" disabled>
+    <pre><div><?= $userInfo['user_name'];?></div></pre>
 </div>
 <div class="form-group">
     <label for="user_telephone" class="control-label">联系方式</label>
-    <input type="text" class="form-control" aria-describedby="user_telephone" id="user_telephone" value="<?= $userInfo['user_telephone'];?>" disabled>
+    <pre><div><?= $userInfo['user_telephone'];?></div></pre>
 </div>
 <div class="form-group">
     <label for="user_qq" class="control-label">QQ号</label>
-    <input type="text" class="form-control" aria-describedby="user_qq" id="user_qq" value="<?= $userInfo['user_qq'];?>" disabled>
+    <pre><div><?= $userInfo['user_qq'];?></div></pre>
 </div>
 <div class="form-group">
     <label for="user_number" class="control-label">学号</label>
-    <input type="text" class="form-control" aria-describedby="user_number"  placeholder="见学生卡" id="user_number" value="<?= $userInfo['user_number'];?>" disabled>
+    <pre><div><?= $userInfo['user_number'];?></div></pre>
 </div>
 <div class="form-group">
     <label for="user_major" class="control-label">专业</label>
-    <input type="text" class="form-control" aria-describedby="user_major" id="user_major" value="<?= $userInfo['user_major'];?>" disabled>
+    <pre><div><?= $userInfo['user_major'];?></div></pre>
 </div>
 <div class="form-group">
     <label for="user_sex" class="control-label">性别</label>
-    <input type="text" class="form-control" aria-describedby="user_sex" id="user_sex" value="<?= $userInfo['user_sex'];?>" disabled>
+    <pre><div><?= $userInfo['user_sex'];?></div></pre>
 </div>  
 <div class="form-group">
     <label for="first_section" class="control-label">第一志愿</label>
-    <input type="text" class="form-control" aria-describedby="first_section" id="first_section" value="<?= $userInfo['first_section'];?>" disabled>
+    <pre><div><?= $userInfo['first_section'];?></div></pre>
 </div>  
 <div class="form-group">
-    <label for="first_section" class="control-label">第二志愿</label>
-    <input type="text" class="form-control" aria-describedby="second_section" id="second_section" value="<?= $userInfo['second_section'];?>" disabled>
+    <label for="second_section" class="control-label">第二志愿</label>
+    <pre><div><?= $userInfo['second_section'];?></div></pre>
 </div>  
 <div class="form-group">
-    <label for="first_section" class="control-label">第三志愿</label>
-    <input type="text" class="form-control" aria-describedby="third_section" id="third_section" value="<?= $userInfo['third_section'];?>" disabled>
+    <label for="third_section" class="control-label">第三志愿</label>
+    <pre><div><?= $userInfo['third_section'];?></div></pre>
 </div>  
 <div class="form-group">
     <label for="user_talent" class="control-label">特长</label>
-    <textarea class="form-control" rows="5" id="user_talent" disabled><?= $userInfo['user_talent'];?></textarea>
+    <pre><div><?= $userInfo['user_talent'];?></div></pre>
 </div>
 
 </div>
@@ -127,11 +127,15 @@ $(document).ready(function() {
         section_id : $('#section_id').val(),
         user_score : $('#user_score').val()
     },function(data) {
-      //alert(data);
-        if(data != true) {
-          alert('打分失败！');
+        //alert(data);
+        var data = JSON.parse(data);
+        if(data['code'] == -1) {
+          alert(data['message']);
         } else {
-          alert('打分成功');
+          alert(data['message']);
+          /*window.opener=null;
+          window.open('', '_self'); 
+          window.close();*/
         }
       }); 
     });   
