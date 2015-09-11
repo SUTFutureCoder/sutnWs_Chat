@@ -118,8 +118,8 @@ class Sign_up extends CI_Controller{
         $path = "/var/www/html/sutnWs_Chat/file_upload/";
         $config = array(
             'upload_path' => $path,
-            
-            'max_size' => 10240,
+            //'allowed_types' = 'gif|jpg|png',
+            'max_size' => 51200,
             'file_name' => $this->input->post('file_user_number')
             );
         $this->load->library('upload',$config);
