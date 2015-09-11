@@ -93,17 +93,17 @@ class Interviewer extends CI_Controller{
             'user_talent' => urldecode($this->input->get('user_talent',TRUE))
       );
       $this->load->model('section');
-      $sectionList = $sectionList = $this->section->getSectionList();
-      $userInfo['first_section'] = $sectionList[$userInfo['first_section']]['section_name'];
+      //$sectionList = $sectionList = $this->section->getSectionList();
+      $userInfo['first_section'] = $this->section->getSection($userInfo['first_section'])[0]['section_name'];
       if($userInfo['second_section'] != 0) {
-        $userInfo['second_section'] = $sectionList[$userInfo['second_section']]['section_name'];
+        $userInfo['second_section'] = $this->section->getSection($userInfo['second_section'])[0]['section_name'];
       } else {
         $userInfo['second_section'] = null;
       }
       if($userInfo['third_section'] != 0) {
-        $userInfo['third_section'] = $sectionList[$userInfo['third_section']]['section_name'];
+        $userInfo['third_section'] = $this->section->getSection($userInfo['second_section'])[0]['section_name']; 
       } else {
-        $userInfo['third_section'] = null;
+         $userInfo['third_section'] = null;
       }
       $sexList = array('男','女','其他','保密');
       $userInfo['user_sex'] = $sexList[$userInfo['user_sex']];
