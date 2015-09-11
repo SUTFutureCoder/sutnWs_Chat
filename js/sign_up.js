@@ -175,8 +175,8 @@ $(document).ready(function() {
 							var successInfo = eval("("+data+")");
 							$('#span_success_id').text(successInfo.user_id);
 							$('#pqcode').attr('src',successInfo.url);
-							var error = $(window.frames["file_frame"].document).find("#error_fileUpload").val();
-							if(error != 0) alert("文件上传失败");
+							var error = $(window.frames["file_frame"].document).find("#error_fileUpload").html();
+							if(error != 1) alert("文件上传失败");
 							$('#success_info_but').click();
 						}
 					});

@@ -94,14 +94,14 @@ class Sign_up extends CI_Controller{
      * @access private
     */
     private function create_QRCode($text, $filename){
-        require_once(BASEPATH.'libraries/Phpqrcode.php');
+        require(BASEPATH.'libraries/Phpqrcode.php');
         $outfile = $filename.'.png';//是否输出二维码图片 文件
         $level = "M";//容错率
         $size = 4;//表示生成图片大小
         $margin = 4;//二维码周围边框空白区域间距值
         $saveandprint = false;//是否保存二维码并显示
         QRcode::png($text, $outfile, $level, $size, $margin, $saveandprint);
-        $newfile = '/alidata/www/wx.sutapp.com/pqcode/'.$outfile; 
+        $newfile = FCPATH.'/pqcode/'.$outfile; 
         $result = rename($outfile,$newfile);
         if(file_exists($newfile)&&$result)
             return true;
@@ -115,10 +115,10 @@ class Sign_up extends CI_Controller{
      * @access public
     */
     public function ajaxFileUpload(){
-        $path = "/alidata/www/wx.sutapp.com/sutnWs_Chat/file_upload/";
+        $path = FCPATH.'/file_upload/';
         $config = array(
             'upload_path' => $path,
-            //'allowed_types' = 'gif|jpg|png',
+            'allowed_types' => 'gif|jpg|png',
             'max_size' => 51200,
             'file_name' => $this->input->post('file_user_number')
             );
@@ -130,6 +130,10 @@ class Sign_up extends CI_Controller{
                         unlink($aimurl);
         }
         $this->upload->do_upload('file');
-        echo "<span hidden='hidden' id='error_fileUpload' >".$_FILES['file']['error']."</span>";
+        $error = 1;
+        if(!file_exists($aimurl)){
+            $error = 0;
+        }
+        echo "<span hidden='hidden' id='error_fileUpload' >".$error."</span>";
         }
 }
