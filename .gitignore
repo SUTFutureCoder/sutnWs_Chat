@@ -7,3 +7,4 @@ database.php
 */cache/!.htaccess
 /nbproject/*
 /application/upload/log.txt
+
