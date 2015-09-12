@@ -99,10 +99,12 @@
             <label for="validatecode" class="control-label">验证码</label>
             <input type="text" class="form-control col-sm-4" aria-describedby="validatecode" id="validatecode">
             <img id="validatecode_img" src="<?= base_url('index.php/index/getagnomen')?>" width="100">
-        </div>
+        </div>        
+    </form>
+    <form>
         <div class="form-group">
             <div class="col-sm-12">
-                <button type="submit" class="btn btn-info btn-block" id="signUp_submit">"家"入网管</button>
+                <button class="btn btn-info btn-block" id="signUp_submit" type="button">"家"入网管</button>
             </div>
         </div>
     </form>

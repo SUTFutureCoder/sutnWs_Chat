@@ -71,8 +71,28 @@ class User_model extends CI_Model{
 		//$this->db->query("update re_user_section set score='$data[user_score]' where user_id='$data[user_id]' and section_id = '$data[section_id]' ");
 		$this->db->where('user_id',$data['user_id']);
 		$this->db->where('section_id',$data['section_id']);
-		$this->db->update('re_user_section',array('score'=>$data['user_score']));
-		return $this->db->affected_rows();
+                $this->db->from('re_user_section');
+                $countRows = $this->db->count_all_results();
+                if (1 != $countRows){
+                    if (0 == $countRows){
+                        return 0;
+                    } else {
+                        //删除多余志愿
+                        $this->db->where('user_id', $data['user_id']);
+                        $this->db->where('section_id', $data['section_id']);
+                        $this->db->delete('re_user_section'); 
+                        
+                        $this->db->insert('re_user_section', array(
+                            'user_id' => $data['user_id'],
+                            'section_id' => $data['section_id'],
+                        ));
+                    }
+                } else {
+                    $this->db->where('user_id',$data['user_id']);
+                    $this->db->where('section_id',$data['section_id']);
+                    $this->db->update('re_user_section',array('score'=>$data['user_score']));
+                    return $this->db->affected_rows();
+                }
 	}
         
 	/**    
