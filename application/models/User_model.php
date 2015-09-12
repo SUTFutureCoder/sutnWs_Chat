@@ -85,7 +85,9 @@ class User_model extends CI_Model{
                         $this->db->insert('re_user_section', array(
                             'user_id' => $data['user_id'],
                             'section_id' => $data['section_id'],
+                            'score'=>$data['user_score'],
                         ));
+                        return $this->db->affected_rows();
                     }
                 } else {
                     $this->db->where('user_id',$data['user_id']);
