@@ -34,7 +34,7 @@ class User_model extends CI_Model{
                         
                         //插入角色——用户表
                         $this->db->insert('re_user_role', array(
-                            'user_id' => $user['user_number'],
+                            'user_id' => $user_id,
                             'role_id' => -1,
                         ));
                         
@@ -113,10 +113,10 @@ class User_model extends CI_Model{
             $this->db->select('user.user_id, user.user_number, user.user_name, user.user_telephone, '
                     . 'user.user_qq, user.user_major, user.user_sex, user.user_talent, re_user_section.section_id');
             $this->db->where('re_user_role.role_id = -1');
-            $this->db->from('re_user_role');
             $this->db->where('re_user_section.valid = 1');
-            $this->db->join('user', 'user.user_id = re_user_role.user_id');
-            $this->db->join('re_user_authorizee', 'user.user_id = re_user_authorizee.user_id');
+            $this->db->where('user.user_id = re_user_role.user_id');
+            $this->db->where('user.user_id = re_user_section.user_id');
+            $this->db->from('re_user_role, re_user_section, user');
             return $this->db->get()->result_array();
 	}
 
