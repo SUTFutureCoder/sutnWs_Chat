@@ -61,8 +61,11 @@ class Sign_up extends CI_Controller{
                     'user_number' => $this->input->post('userNumber'),
                     'user_major' => $this->input->post('userMajor'),
                     'user_sex' => $this->input->post('userSex'),
-                    'user_talent' => $this->input->post('user_talent')
-                    );
+                    'user_talent' => $this->input->post('user_talent'),
+                    'user_reg_time' => date('Y-m-d H:i:s'),
+                    'user_th' => date('Y') - 2002,
+                );
+            
             $user_sec_info = array(
                     'userFirstSection' => $this->input->post('userFirstSection'),
                     'userSecondSection' => $this->input->post('userSecondSection'),

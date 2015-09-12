@@ -172,7 +172,7 @@ class Interviewer extends CI_Controller{
    				$this->session->set_userdata('interviewerSection', '策划部');
    				echo '4';
    				break;
-   			case 'nwsyinyin' :
+   			case 'nwsyingyin' :
    				$this->session->set_userdata('interviewerSection', '影音部');
    				echo '5';
    				break;
