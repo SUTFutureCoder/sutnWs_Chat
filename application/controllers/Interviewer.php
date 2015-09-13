@@ -157,7 +157,7 @@ class Interviewer extends CI_Controller{
    		//echo $interviewerPwd;
    		switch ($interviewerPwd) {
    			case 'nwsxuanchuan':
-   				$this->session->set_userdata('interviewerSection', '采编部');
+   				$this->session->set_userdata('interviewerSection', '宣传部');
    				echo '1';
    				break;	
    			case 'nwswailian' :
@@ -197,6 +197,7 @@ class Interviewer extends CI_Controller{
       $this->load->library('session');
       if($this->session->userdata('interviewerSection')) {
            $this->load->model('user_model');
+           $this->load->model('fresh_model');
             $data['user_id'] = $this->input->post('user_id',TRUE);
             $data['section_id'] = $this->input->post('section_id',TRUE);
             $data['user_score'] = $this->input->post('user_score',TRUE);
@@ -204,7 +205,7 @@ class Interviewer extends CI_Controller{
               echo json_encode(array('code' => -1, 'message' => '分数不合法'));
               return;
             }
-           $result = $this->user_model->InterviewerScore($data);
+           $result = $this->fresh_model->InterviewerScore($data);
            //$result = true;
            //echo $data['user_score'];
            if($result > 0) {

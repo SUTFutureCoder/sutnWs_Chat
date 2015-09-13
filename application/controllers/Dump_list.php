@@ -57,9 +57,10 @@ class Dump_list extends CI_Controller{
         $this->load->library('phpexcel');
         $this->load->model('section');
         $this->load->model('user_model'); 
+        $this->load->model('fresh_model');
         if($this->session->userdata('dumpAccess')){
             $sectionList = $this->section->getSectionList();
-            $freshList = $this->user_model->dumpFreshList();
+            $freshList = $this->fresh_model->dumpFreshList();
             $objPHPExcel = new PHPExcel();
             $objWriter = new PHPExcel_Writer_Excel5($objPHPExcel);     
 
