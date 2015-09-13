@@ -40,7 +40,7 @@ if (!defined('PHPEXCEL_ROOT')) {
  * @package    PHPExcel
  * @copyright  Copyright (c) 2006 - 2014 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
-class PHPExcel
+class Phpexcel
 {
     /**
      * Unique ID

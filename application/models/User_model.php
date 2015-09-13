@@ -36,7 +36,7 @@ class User_model extends CI_Model{
                         
                         //插入角色——用户表
                         $this->db->insert('re_user_role', array(
-                            'user_id' => $user['user_number'],
+                            'user_id' => $user_id,
                             'role_id' => -1,
                         ));
                         
@@ -56,48 +56,4 @@ class User_model extends CI_Model{
 				return false;
 		}	
 	}
-
-	/**    
-	 *  @Purpose:    
-	 * 面试官打分
-	 *     
-	 *  @Method Name:
-	 *  getRule
-	 *  @Parameter: 
-	 * 
-	 *  @Return: 
-	 *  
-	*/
-	public function InterviewerScore($data) {
-		$this->load->database();
-		//$this->db->query("update re_user_section set score='$data[user_score]' where user_id='$data[user_id]' and section_id = '$data[section_id]' ");
-		$this->db->where('user_id',$data['user_id']);
-		$this->db->where('section_id',$data['section_id']);
-		$this->db->update('re_user_section',array('score'=>$data['user_score']));
-		return $this->db->affected_rows();
-	}
-        
-	/**    
-	 *  @Purpose:    
-	 *  导出新生名单列表
-	 *     
-	 *  @Method Name:
-	 *  getRule
-	 *  @Parameter: 
-	 * 
-	 *  @Return: 
-	 *  
-	*/
-	public function dumpFreshList() {
-            $this->load->database();
-            $this->db->select('user.user_id, user.user_number, user.user_name, user.user_telephone, '
-                    . 'user.user_qq, user.user_major, user.user_sex, user.user_talent, re_user_section.section_id');
-            $this->db->where('re_user_role.role_id = -1');
-            $this->db->from('re_user_role');
-            $this->db->where('re_user_section.valid = 1');
-            $this->db->join('user', 'user.user_id = re_user_role.user_id');
-            $this->db->join('re_user_authorizee', 'user.user_id = re_user_authorizee.user_id');
-            return $this->db->get()->result_array();
-	}
-
 }
