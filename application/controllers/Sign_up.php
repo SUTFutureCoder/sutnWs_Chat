@@ -18,62 +18,97 @@ class Sign_up extends CI_Controller{
     }
 
     /**    
-     *  AJAX验证学号    
-     *  
-     * @access public
-    */
-    public function checkNumber(){
-    	$this->load->model('user_model');
-    	$user_number = $this->input->post('number');
-    	$data = $this->user_model->get_user($user_number);
-    	if(empty($data))
-    		echo true;
-    	else
-    		echo false;
-    }
-
-    /**    
-     *  AJAX验证验证码 
-     *  
-     * @access public
-    */
-    public function checkValidatecode(){
-        $this->load->library('session');
-        $validatecode = $this->input->post('validatecode');
-        if(strtolower($validatecode) !=  strtolower($this->session->userdata('authnum_session')))
-            echo false;
-       else
-            echo true;
-    }
-
-    /**    
      *  AJAX报名动作    
      *  
      * @access public
     */
     public function submitUser(){
             $this->load->model('user_model');
+            $this->load->library('session');
             $this->load->helper('url');
             $user_info = array(
-                    'user_name' => $this->input->post('userName'),
-                    'user_telephone' => $this->input->post('userTelephone'),
-                    'user_qq' => $this->input->post('userQQ'),
-                    'user_number' => $this->input->post('userNumber'),
-                    'user_major' => $this->input->post('userMajor'),
-                    'user_sex' => $this->input->post('userSex'),
-                    'user_talent' => $this->input->post('user_talent'),
+                    'user_name' => $this->input->post('userName', TRUE),
+                    'user_telephone' => $this->input->post('userTelephone', TRUE),
+                    'user_qq' => $this->input->post('userQQ', TRUE),
+                    'user_number' => $this->input->post('userNumber', TRUE),
+                    'user_major' => $this->input->post('userMajor', TRUE),
+                    'user_sex' => $this->input->post('userSex', TRUE),
+                    'user_talent' => $this->input->post('user_talent', TRUE),
+                    'validatecode' => $this->input->post('validatecode', TRUE),
                     'user_reg_time' => date('Y-m-d H:i:s'),
-                    'user_th' => date('Y') - 2002,
+                    'user_th' => date('Y') - 2002
                 );
-            
+            if($user_info['validatecode'] == NULL){
+                echo json_encode(array('code' => -1,  'message' => "验证码不能为空"));
+                exit();
+            }
+             if(strtolower($user_info['validatecode']) !=  strtolower($this->session->userdata('authnum_session'))){
+                echo json_encode(array('code' => -2,  'message' => "验证码不正确"));
+                exit();
+            }
+            if($user_info['username'] == NULL){
+                echo json_encode(array('code' => -3,  'message' => "姓名不能为空"));
+                exit();
+            }
+             if(10 < iconv_strlen($user_info['username'])){
+                echo json_encode(array('code' => -4,  'message' => "姓名不能超过10个字符"));
+                exit();
+            }
+            if(11 != strlen($user_info['user_telephone']) || !ctype_digit($user_info['user_telephone'])){
+                echo json_encode(array('code' => -5,  'message' => "联系方式不合法,必须为11位数字"));
+                exit();
+            }
+            if($user_info['user_qq'] == NULL){
+                echo json_encode(array('code' => -6,  'message' => "qq不能为空"));
+                exit();
+            }
+            if(16 < strlen($user_info['user_qq']) || !ctype_digit(strlen($user_info['user_qq'])){
+                echo json_encode(array('code' => -7,  'message' => "qq号应为小于16位的纯数字组合"));
+                exit();
+            }
+            if($user_info['user_number'] == NULL){
+                echo json_encode(array('code' => -8, 'message' => '学号不能为空'));
+                exit();
+            }
+            if(9 != strlen($user_info['user_number'])  || !ctype_digit($user_info['user_number'])){
+                echo json_encode(array('code' => -9, 'message' => "学号应为9位纯数字组合"));
+                exit();
+            }
+            if($this->user_model->get_user($user_info['user_number'])){
+                echo json_encode(array('code' => -10, 'message' => "检测到学号重复"));
+                exit();
+            }
+            if($user_info['user_major'] == NULL){
+                echo json_encode(array('code' => -11, 'message' => '专业不能为空'));
+                exit();
+            }
+            if(20 < iconv_strlen($user_info['user_major'])){
+                echo json_encode(array('code' => -12, 'message' => '专业不能超过20个字符'));
+                exit();
+            }
+            if($user_info['user_sex'] == NULL){
+                echo json_encode(array('code' => -13, 'message' => '性别不能为空'));
+                exit();
+            }
+            if(1 != strlen($user_info['user_major']) || !ctype_digit($user_info['user_major'])){
+                echo json_encode(array('code' => -14, 'message' => '性别不合法'));
+                exit();
+            }
+            if(398 < iconv_strlen($user_info['user_major'])){
+                echo json_encode(array('code' => -15, 'message' => '特长不能超过389个字符'));
+                exit();
+            }
             $user_sec_info = array(
-                    'userFirstSection' => $this->input->post('userFirstSection'),
-                    'userSecondSection' => $this->input->post('userSecondSection'),
-                    'userThirdSection' => $this->input->post('userThirdSection')
+                    'userFirstSection' => $this->input->post('userFirstSection', TRUE),
+                    'userSecondSection' => $this->input->post('userSecondSection', TRUE),
+                    'userThirdSection' => $this->input->post('userThirdSection', TRUE)
                     );
-            
+             if($user_sec_info['userFirstSection'] == NULL){
+                echo json_encode(array('code' => -16, 'message' => '第一志愿不能为空'));
+                exit();
+            }
            $user_id = $this->user_model->user_sign_up($user_info, $user_sec_info);
-                 if($user_id ){
+             if($user_id ){
                 $url = base_url().'pqcode/'.$user_id.'.png';
                 
                 $text = site_url().'/interviewer/index?user_id='.$user_id.'&userName='.urlencode($user_info['user_name']).'&userTelephone='.$user_info['user_telephone'].'&userQQ='.$user_info['user_qq'].'&userNumber='.$user_info['user_number'].'&userMajor='.urlencode($user_info['user_major']).'&userSex='.$user_info['user_sex'].'&user_talent='.urlencode($user_info['user_talent']).'&userFirstSection='.$user_sec_info['userFirstSection'].'&userSecondSection='.$user_sec_info['userSecondSection'].'&userThirdSection='.$user_sec_info['userThirdSection'];
@@ -82,13 +117,14 @@ class Sign_up extends CI_Controller{
                 if($result){
                     $data = array(
                         'url' => $url,
-                        'user_id' => $user_id
+                        'user_id' => $user_id,
+                        'message' => '报名成功'
                     );
                     echo json_encode($data);
                 }else
-                    echo false;
+                    echo json_encode(array('code' => -17, 'user_id' => $user_id, 'message' => '二维码生成失败'));
             }else
-                echo false;
+                echo json_encode(array('code' => -18,  'message' => '报名添加失败'));
     }
 
     /**    

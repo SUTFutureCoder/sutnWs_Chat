@@ -20,8 +20,10 @@ class User_model extends CI_Model{
 
 	public function get_user($user_number){
 		$this->load->database();
-		return $this->db->where(array('user_number'=>$user_number))->get('user')->result_array();
-		 
+	 	$result = $this->db->where(array('user_number'=>$user_number))->get('user');
+	 	if($result->num_rows())
+	 		return $result->row()->user_id;
+	 	return 0;
 	}
 
 	public function user_sign_up($user, $section){
