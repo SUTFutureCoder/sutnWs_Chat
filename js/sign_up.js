@@ -4,7 +4,6 @@ $(document).ready(function() {
 	  	userName : $('#user_name'),
 	  	userTelephone : $('#user_telephone'),
 	  	userQQ : $('#user_qq'),
-	  	userNumber : $('#user_number'),
 	  	userMarjor : $('#user_major'),
 	  	userSex : $('#user_sex'),
 	  	sectionWill : $('#section_will')
@@ -14,10 +13,8 @@ $(document).ready(function() {
 		checkName : false,
 		checkTelephone : false,
 		checkQQ : false,
-		checkNumber : false,
 		checkMarjor : false,
-		sectionWill : false,
-		checkValidatecode : false
+		sectionWill : false
 	};
 
 	var signUpCheck = {
@@ -34,7 +31,7 @@ $(document).ready(function() {
 	    	}
 	    },
 */
-	    checkValidatecode : function() {
+	   /* checkValidatecode : function() {
 	    	var validatecode = $('#validatecode').val();
 	    	if(validatecode.length != 4) {
 	    		 checkReturn.checkValidatecode = false;
@@ -48,7 +45,7 @@ $(document).ready(function() {
 	    			return data;
 	    		});
 	    	}
-	    },
+	    },*/
 
 	    eventCheck: function() {
 	    	dom.userName.bind('input propertychange blur', function() {
@@ -85,24 +82,7 @@ $(document).ready(function() {
 	    		}
 	    	});
 
-	    	dom.userNumber.bind('input propertychange blur',function() {
-	    		var number = $(this).val();
-	    		var len = number.length;
-	    		if(len == 0) {
-	    			checkReturn.checkNumber =  false;
-	    		} else {
-	    			//checkReturn.checkNumber =  true;
-	    			url = $('#hide_site_url').val() + '/Sign_up/checkNumber';
-	    			$.post(url,{number:number},function(data) {
-	    				if(data == true) {
-	    					checkReturn.checkNumber =  true;
-	    				} else {
-	    					checkReturn.checkNumber =  false;
-	    				}
-	    				checkReturn.checkNumber =  data;
-	    			});
-	    		}
-	    	});
+	    	
 
 	    	dom.userMarjor.bind('input propertychange blur',function() {
 	    		var marjor = $(this).val;
@@ -132,24 +112,17 @@ $(document).ready(function() {
 	signUpCheck.init();
 	//signUpCheck.checkSign();
 	$('#signUp_submit').click(function() {
-		var checkValidatecode = signUpCheck.checkValidatecode();
 			if(checkReturn.checkName == false) {
 				alert("请检查姓名填写是否正确");
 			} else if(checkReturn.checkTelephone == false) {
 				alert("请检查联系方式填写是否正确");
 			} else if(checkReturn.checkQQ == false) {
 				alert("请检查QQ填写是否正确");
-			} else if(checkReturn.checkNumber == false) {
-				//alert(checkReturn.checkNumber);
-				alert("请检查学号填写是否正确");
-			} else if(checkReturn.checkMarjor == false) {
+			}  else if(checkReturn.checkMarjor == false) {
 				alert("请检查专业填写是否正确");
 			} else if(checkReturn.sectionWill == false){
 				alert("请检查志愿是否填写正确");
-			} else if(checkValidatecode == false) {
-				alert("验证码填写错误");
-				$('#validatecode_img').click();
-			}else {
+			} else {
 				/*var check = signUpCheck.checkSign();
 				if(check != true) {
 					alert("请检查你填写的信息是否正确!");
@@ -166,20 +139,20 @@ $(document).ready(function() {
 						userFirstSection : $('#first_section').val(),
 						userSecondSection : $('#second_section').val(),
 						userThirdSection : $('#third_section').val(),
-						user_talent : $('#user_talent').val()
+						user_talent : $('#user_talent').val(),
+						validatecode : $('#validatecode').val()
 					},function(data) {
 						//alert(data);
-						if(data == false) {
-							alert('"家"入失败！请仔细检查你填写的信息是否正确!');
+						 var data = JSON.parse(data);
+						if(data['code'] != 1) {
+							alert(data['message']);
 						} else {
-							var successInfo = eval("("+data+")");
-							$('#span_success_id').text(successInfo.user_id);
-							$('#pqcode').attr('src',successInfo.url);
+							//var successInfo = eval("("+data+")");
+							$('#span_success_id').text(data['user_id']);
+							$('#pqcode').attr('src',data['url']);
 //							var error = $(window.frames["file_frame"].document).find("#error_fileUpload").html();
 //							if(error != 1) alert("文件上传失败");
 							$('#success_info_but').click();
-							checkReturn.checkNumber = false;
-
 						}
 					});
 				//}

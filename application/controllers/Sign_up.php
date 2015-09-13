@@ -62,7 +62,7 @@ class Sign_up extends CI_Controller{
                 echo json_encode(array('code' => -6,  'message' => "qq不能为空"));
                 exit();
             }
-            if(16 < strlen($user_info['user_qq']) || !ctype_digit(strlen($user_info['user_qq'])){
+            if(16 < strlen($user_info['user_qq']) || !ctype_digit($user_info['user_qq'])){
                 echo json_encode(array('code' => -7,  'message' => "qq号应为小于16位的纯数字组合"));
                 exit();
             }
@@ -116,6 +116,7 @@ class Sign_up extends CI_Controller{
                 $result = $this->create_QRCode($text, $user_id);
                 if($result){
                     $data = array(
+                        'code' => 1,
                         'url' => $url,
                         'user_id' => $user_id,
                         'message' => '报名成功'
