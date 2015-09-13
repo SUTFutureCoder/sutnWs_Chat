@@ -156,7 +156,7 @@ class Sign_up extends CI_Controller{
      * @access public
     */
     public function ajaxFileUpload(){
-        $path = FCPATH.'/file_upload/';
+        $path = FCPATH.'file_upload/';
         $config = array(
             'upload_path' => $path,
             'allowed_types' => 'gif|jpg|png',
@@ -171,10 +171,10 @@ class Sign_up extends CI_Controller{
                         unlink($aimurl);
         }
         $this->upload->do_upload('file');
-        $error = 1;
+        header('Content-Type:text/html;charset=utf-8');
         if(!file_exists($aimurl)){
-            $error = 0;
+            echo "<script>alert('文件上传失败');</script>";
         }
-        echo "<span hidden='hidden' id='error_fileUpload' >".$error."</span>";
+        echo "<script>alert('文件上传成功');</script>";
         }
 }

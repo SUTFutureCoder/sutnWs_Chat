@@ -150,8 +150,6 @@ $(document).ready(function() {
 							//var successInfo = eval("("+data+")");
 							$('#span_success_id').text(data['user_id']);
 							$('#pqcode').attr('src',data['url']);
-							var error = $(window.frames["file_frame"].document).find("#error_fileUpload").html();
-							if(error != 1) alert("文件上传失败");
 							$('#success_info_but').click();
 						}
 					});
