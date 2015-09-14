@@ -44,27 +44,27 @@ class Accept extends CI_Controller{
    		}
    		//echo $interviewerPwd;
    		switch ($acceptAccess) {
-                        case 'nwsxc' . date('dm'):
+                        case 'nwsxc' . date('dm') . 't9aybz':
    				$this->session->set_userdata('acceptAccess', 1);
    				echo '1';
    				break;	
-   			case 'nwswl' . date('dm') :
+                        case 'nwswl' . date('dm') . 'z2vht0':
    				$this->session->set_userdata('acceptAccess', 2);
    				echo '2';
    				break;
-   			case 'nwscb' . date('dm') :
+                        case 'nwscb' . date('dm') . 'mkx7xv':
    				$this->session->set_userdata('acceptAccess', 3);
    				echo '3';
    				break;	
-   			case 'nwsch' . date('dm'):
+                        case 'nwsch' . date('dm') . 'nuntcr':
    				$this->session->set_userdata('acceptAccess', 4);
    				echo '4';
    				break;
-   			case 'nwsyy' . date('dm') :
+                        case 'nwsyy' . date('dm') . 'reycwu' :
    				$this->session->set_userdata('acceptAccess', 5);
    				echo '5';
    				break;
-   			case 'nwsjs' . date('dm'):
+                        case 'nwsjs' . date('dm') . 'bjsfho':
    				$this->session->set_userdata('acceptAccess', 6);
    				echo '6';
    				break;	
