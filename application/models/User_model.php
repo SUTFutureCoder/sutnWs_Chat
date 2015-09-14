@@ -101,4 +101,28 @@ class User_model extends CI_Model{
             return $this->db->get()->result_array();
 	}
 
+	/**    
+	 *  @Purpose:    
+	 *  根据qq号，电话获取学号
+	 *     
+	 *  @Method Name:
+	 *  getRule
+	 *  @Parameter: 
+	 * 
+	 *  @Return: 
+	 *  
+	*/
+	public function getNumber($data) {
+		 $this->load->database();
+		 $this->db->select('user_number');
+		 $this->db->where('user_qq',$data['user_qq']);
+		 $this->db->where('user_telephone',$data['user_telephone']);
+		 $result = $this->db->get('user');
+		 if($this->db->num_rows() != 1) {
+		 	return false;
+		 } else {
+		 	return $this->db->result_array();
+		 }
+	}
+
 }
