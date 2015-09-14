@@ -1,4 +1,4 @@
-<?php if (!isset($sectionArray[$this->session->userdata('acceptAccess')])): ?>
+<?php if ($this->session->userdata('acceptAccess') && 0 < $this->session->userdata('acceptAccess') && 7 > $this->session->userdata('acceptAccess')): ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -46,15 +46,16 @@
                 <?php endif; ?>
                 <td style="color: red"><?= $freshUserValue['score'] ?></td>
                 <?php if ($freshUserValue['valid'] ): ?>
-                    <td><button user_id="<?= $freshUserValue['user_id'] ?>" act="cancel" type="button" class="btn btn-danger accept_button">取消录取</button></td>
+                    <td><button user_id="<?= $freshUserValue['user_id'] ?>" act="0" type="button" class="btn btn-danger accept_button">取消录取</button></td>
                 <?php else: ?>
-                    <td><button user_id="<?= $freshUserValue['user_id'] ?>" act="accept" type="button" class="btn btn-success accept_button">录取</button></td>
+                    <td><button user_id="<?= $freshUserValue['user_id'] ?>" act="1" type="button" class="btn btn-success accept_button">录取</button></td>
                 <?php endif; ?>
             </tr>
             <?php endforeach; ?>
         </tbody>
     </table>
  <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+ <script type="text/javascript" src="<?= base_url('js/jquery.form.js')?>"></script>
 <script type="text/javascript" >
 (function(){
     var dom = {
@@ -68,18 +69,26 @@
         
         eventFn : function(){
             dom.userInfo.on('click', '.accept_button', function(){
-                alert($(this).attr('user_id'));
                 var url = "<?= base_url('index.php/accept/acceptToggle') ?>";
+                var targetDom = $(this);
+                var user_id = targetDom.attr('user_id');
+                var section_id = <?= $this->session->userdata('acceptAccess') ?>;
+                var toggle = targetDom.attr('act');
                 $.post(url,{
-			dumpPwd : pwd
+			user_id : user_id,
+                        section_id : section_id,
+                        toggle : toggle
 		},function(data) {
-			//alert(data);
-			if(data == false) {
-				//alert(1);
-				alert("密码不正确！");
-				window.location.reload();
+                        var data = JSON.parse(data);
+			if(data['code'] != 1) {
+				alert(data['status']);
 			} else {
-				window.location.href = '<?= site_url();?>' + '/Dump_list/dumpFreshAll';
+                                targetDom.attr('act', data['toggle']);
+                                if (data['toggle']){
+                                    targetDom.html('录取').removeClass('btn-danger').addClass('btn-success');
+                                } else {
+                                    targetDom.html('取消录取').removeClass('btn-success').addClass('btn-danger');;
+                                }
 			}
 		});
             });
