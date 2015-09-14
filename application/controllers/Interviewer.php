@@ -236,12 +236,14 @@ class Interviewer extends CI_Controller{
      * @access public
     */
    public function get_back_pqcode(){
+      $this->load->helper('url');
+      $this->load->model('user_model');
       $user_info = array(
                     'user_telephone' => $this->input->post('user_telephone', TRUE),
-                    'user_qq' => $this->input->post('userQQ', TRUE)
+                    'user_qq' => $this->input->post('user_qq', TRUE)
                 );
       if(11 != strlen($user_info['user_telephone']) || !ctype_digit($user_info['user_telephone'])){
-                echo json_encode(array('code' => -5,  'message' => "联系方式不合法,必须为11位数字"));
+                echo json_encode(array('code' => -5,  'message' => "联系方式不合法,必须为11位纯数字"));
                 exit();
       }
       if($user_info['user_qq'] == NULL){
@@ -252,14 +254,14 @@ class Interviewer extends CI_Controller{
                 echo json_encode(array('code' => -7,  'message' => "qq号应为小于16位的纯数字组合"));
                 exit();
       }
-      $data = $this->user_model->get_back_pqcode($user_info);
-      if($data[0]['user_id']){
+      $user_id = $this->user_model->getNumber($user_info);
+      if($user_id){
                 $salt = 'sutnws';
-                $filename = md5($salt.$user_id[0]['user_id'].$salt);
+                $filename = md5($salt.$user_id.$salt);
                 $url = base_url().'pqcode/'.$filename.'.png';
                 echo json_encode(array('code' => 1,  'url' => $url, 'user_id' => $user_id ));
       }else{
-                echo json_encode(array('code' => -8,  'message' => "查询失败,您可能尚未报名.如有问题请和管理员联系."));
+                echo json_encode(array('code' => -8,  'message' => "找回失败,您可能尚未报名.如有问题请和管理员联系."));
       }
    }
 }

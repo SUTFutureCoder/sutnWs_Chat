@@ -23,6 +23,8 @@
                 </div>
     </div>
 </form>
+<?php require('success_info.php');?>
+    <button type="button" class="btn btn-primary " data-toggle="modal"  data-backdrop="" data-target="#success_info" id = "success_info_but" aria-hidden="ture" style='display:none'></button>
 </div>
 
 <footer class="footer">
@@ -62,8 +64,7 @@
             <img src="<?= base_url('images/wg_small.png')?>">
           </div>
         </div>
-        <?php require('success_info.php');?>
-    <button type="button" class="btn btn-primary " data-toggle="modal"  data-backdrop="" data-target="#success_info" id = "success_info_but" aria-hidden="ture" style='display:none'></button>
+        
       </div>
     </div>
     <hr>
@@ -75,6 +76,7 @@
   </div>
 </footer>
 <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+<script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
 <script>
 $(document).ready(function() {
   $('#interviewerScore').click(function() {
@@ -83,7 +85,6 @@ $(document).ready(function() {
         user_telephone : $('#user_telephone').val(),
         user_qq : $('#user_qq').val()
     },function(data) {
-        //alert(data);
         var data = JSON.parse(data);
         if(data['code'] != 1) {
           alert(data['message']);
