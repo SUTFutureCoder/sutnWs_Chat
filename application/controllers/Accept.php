@@ -27,7 +27,12 @@ class Accept extends CI_Controller{
     public function index(){
         $this->load->helper('url');
         $this->load->library('session');
-        $this->load->view('accept');
+        if ($this->session->userdata('acceptAccess') && 0 < $this->session->userdata('acceptAccess') && 7 > $this->session->userdata('acceptAccess')){
+            $this->acceptFresh();
+        } else {
+            $this->load->view('accept');
+        }
+        
     }
     
     /**    
