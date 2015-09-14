@@ -151,6 +151,7 @@ $(document).ready(function() {
 							$('#span_success_id').text(data['user_id']);
 							$('#pqcode').attr('src',data['url']);
 							$('#success_info_but').click();
+							alert('请务必截图保存二维码');
 						}
 					});
 				//}
