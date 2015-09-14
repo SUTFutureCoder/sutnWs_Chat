@@ -125,4 +125,21 @@ class Fresh_model extends CI_Model{
         return $this->db->get('re_user_role, re_user_section, user')->result_array();
     }
     
+    /**
+     * 切换录取状态
+     * 
+     * 
+     * @access public
+     * @param type $name Description
+     * @return bool Success of not
+     */
+    public function toggleValid($userId, $sectionId, $toggle){
+        $this->load->database();
+        $this->db->where('user_id', $userId);
+        $this->db->where('section_id', $sectionId);
+        $this->db->update('re_user_section', array(
+            'valid' => $toggle,
+        ));
+        return $this->db->affected_rows();
+    }
 }

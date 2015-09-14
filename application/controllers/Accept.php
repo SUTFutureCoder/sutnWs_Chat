@@ -110,34 +110,50 @@ class Accept extends CI_Controller{
    }
    
    /**
+    * 切换录取状态
     * 
     * 
-    * 
-    * @return int
+    * @access public
+    * @return 
     */
-   public function acceptFresh(){
-       $this->load->model('section');
-       $sectionList = $this->section->getSectionList();
-       $sectionArray = array();
-       foreach ($sectionList as $sectionListValue){
-           $sectionArray[$sectionListValue['section_id']] = $sectionListValue['section_name'];
-       }
-       $this->load->model('fresh_model');
+   public function acceptToggle(){
        $this->load->library('session');
-       if (!isset($sectionArray[$this->session->userdata('acceptAccess')]) || !is_numeric($this->session->userdata('acceptAccess'))){
-           echo '错误的密码';
+       if (!is_numeric($this->session->userdata('acceptAccess')) || 0 >= $this->session->userdata('acceptAccess') || 6 < $this->session->userdata('acceptAccess')){
+           echo json_encode(array('code' => -1, 'status' => '认证错误'));
            return 0;
        }
        
-       $userAcceptedSum = $this->fresh_model->getAcceptedSum($this->session->userdata('acceptAccess'));
+       $userId = $this->input->post('user_id', true);
+       $sectionId = $this->input->post('section_id', true);
+       $toggle = $this->input->post('toggle', true);
        
-       $freshUserList = array();
-       $freshUserList = $this->fresh_model->getFreshAcceptList($this->session->userdata('acceptAccess'));
+       if (empty($userId) || !is_numeric($userId) || 0 > $userId){
+           echo json_encode(array('code' => -3, 'status' => '用户id有误'));
+           return 0;
+       }
+       
+       if (!isset($toggle) || ($toggle != 1 && $toggle != 0)){
+           echo json_encode(array('code' => -2, 'status' => '切换量错误'));
+           return 0;
+       }
        
        
-       $this->load->view('accept', array(
-           'userAcceptSum' => $userAcceptedSum,
-           'freshUserList' => $freshUserList,
-       ));
+       if (empty($sectionId) || $this->session->userdata('acceptAccess') != $sectionId){
+           echo json_encode(array('code' => -3, 'status' => '部门id错误'));
+           return 0;
+       }
+       
+       $this->load->model('fresh_model');
+       $result = $this->fresh_model->toggleValid($userId, $sectionId, $toggle);
+       if ($result){
+           if ($toggle){
+               $toggle = 0;
+           } else {
+               $toggle = 1;
+           }
+           echo json_encode(array('code' => 1, 'status' => 'ok', 'toggle' => $toggle));
+       } else {
+           echo json_encode(array('code' => 0, 'status' => '更新失败'));
+       }
    }
 }
