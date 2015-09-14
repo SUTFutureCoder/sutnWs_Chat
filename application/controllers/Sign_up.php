@@ -174,7 +174,8 @@ class Sign_up extends CI_Controller{
         header('Content-Type:text/html;charset=utf-8');
         if(!file_exists($aimurl)){
             echo "<script>alert('文件上传失败');</script>";
+        }else{
+            echo "<script>alert('文件上传成功');</script>";
         }
-        echo "<script>alert('文件上传成功');</script>";
-        }
+    }
 }

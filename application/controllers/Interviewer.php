@@ -220,4 +220,46 @@ class Interviewer extends CI_Controller{
       $this->session->unset_userdata('interviewerSection');
    }
 
+   /**    
+     *  公共找回二维码页面
+     *  
+     * @access public
+    */
+   public function get_back_pqcode_page(){
+      $this->load->helper('url');
+      $this->load->view('get_back_pqcode');
+   }
+
+   /**    
+     *  AJAX找回二维码
+     *  
+     * @access public
+    */
+   public function get_back_pqcode(){
+      $user_info = array(
+                    'user_telephone' => $this->input->post('user_telephone', TRUE),
+                    'user_qq' => $this->input->post('userQQ', TRUE)
+                );
+      if(11 != strlen($user_info['user_telephone']) || !ctype_digit($user_info['user_telephone'])){
+                echo json_encode(array('code' => -5,  'message' => "联系方式不合法,必须为11位数字"));
+                exit();
+      }
+      if($user_info['user_qq'] == NULL){
+                echo json_encode(array('code' => -6,  'message' => "qq不能为空"));
+                exit();
+      }
+      if(16 < strlen($user_info['user_qq']) || !ctype_digit($user_info['user_qq'])){
+                echo json_encode(array('code' => -7,  'message' => "qq号应为小于16位的纯数字组合"));
+                exit();
+      }
+      $data = $this->user_model->get_back_pqcode($user_info);
+      if($data[0]['user_id']){
+                $salt = 'sutnws';
+                $filename = md5($salt.$user_id[0]['user_id'].$salt);
+                $url = base_url().'pqcode/'.$filename.'.png';
+                echo json_encode(array('code' => 1,  'url' => $url, 'user_id' => $user_id ));
+      }else{
+                echo json_encode(array('code' => -8,  'message' => "查询失败,您可能尚未报名.如有问题请和管理员联系."));
+      }
+   }
 }
