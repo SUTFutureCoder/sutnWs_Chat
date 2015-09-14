@@ -102,4 +102,27 @@ class Fresh_model extends CI_Model{
         return $this->db->count_all_results();
     }
     
+    /**
+     * 获取待录取名单
+     * 
+     * @access public
+     * @param int $sectionId The id of section
+     * @return array List of fresh student to be accepted
+     */
+    public function getFreshAcceptList($sectionId = 0){
+        $this->load->database();
+        $this->db->select('re_user_section.user_id, re_user_section.valid, re_user_section.score, user.user_number, user.user_name, user.user_telephone, '
+                . 'user.user_major, user.user_sex, user.user_talent');
+        $this->db->where('re_user_role.role_id = -1');
+        $this->db->where('user.user_th', date('Y') - 2002);
+        $this->db->where('re_user_section.user_id = re_user_role.user_id');
+        $this->db->where('re_user_section.user_id = user.user_id');
+        $this->db->order_by('re_user_section.score', 'desc');
+        $this->db->order_by('re_user_section.valid', 'esc');
+        if ($sectionId != 0){
+            $this->db->where('re_user_section.section_id', $sectionId);
+        }
+        return $this->db->get('re_user_role, re_user_section, user')->result_array();
+    }
+    
 }

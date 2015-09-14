@@ -36,7 +36,7 @@ class User_model extends CI_Model{
                         
                         //插入角色——用户表
                         $this->db->insert('re_user_role', array(
-                            'user_id' => $user['user_number'],
+                            'user_id' => $user_id,
                             'role_id' => -1,
                         ));
                         
