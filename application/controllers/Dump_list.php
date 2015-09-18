@@ -60,7 +60,7 @@ class Dump_list extends CI_Controller{
         $this->load->model('fresh_model');
         if($this->session->userdata('dumpAccess')){
             $sectionList = $this->section->getSectionList();
-            $freshList = $this->fresh_model->dumpFreshList();
+            $freshList = $this->fresh_model->dumpFreshList();            
             $objPHPExcel = new PHPExcel();
             $objWriter = new PHPExcel_Writer_Excel5($objPHPExcel);     
 
@@ -119,9 +119,9 @@ class Dump_list extends CI_Controller{
                 //切换部门标签卡
                 $objPHPExcel->setActiveSheetIndex($freshListValue['section_id']);
                 if (empty($sectionCounter['person'][$freshListValue['section_id']])){
-                    $sectionCounter['person'][$freshListValue['section_id']]++;
-                } else {
                     $sectionCounter['person'][$freshListValue['section_id']] = 1;
+                } else {
+                    $sectionCounter['person'][$freshListValue['section_id']]++;
                 }
                 
                 $i = $sectionCounter['person'][$freshListValue['section_id']] + 1;
