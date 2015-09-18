@@ -202,6 +202,12 @@ class Accept extends CI_Controller{
 //            $sectionSum[$sectionSumTempValue['section_id']] = $sectionSumTempValue['sum'];
 //        }
         $freshBattleUserInfoList = $this->fresh_model->getFreshBattleUserInfoList();
+        if (!count($freshBattleUserInfoList)){
+            echo '<h1 style="color:red">招新已完成，各位辛苦了～！</h1><br/><h1 style="color:blue"> 【FROM：*Chen @北京】</h1><br/><h2>请进入http://wx.sutapp.com/index.php/dump_list导出名单</h2>';
+            exit();
+        }
+        
+        
         $userList = array();
         $userInfo = array();
         foreach ($freshBattleUserInfoList as $key => $freshBattleUserInfoListValue){
