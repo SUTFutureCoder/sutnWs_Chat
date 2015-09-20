@@ -59,7 +59,8 @@
 <script type="text/javascript" >
 (function(){
     var dom = {
-        userInfo : $(".user_info")
+        userInfo : $(".user_info"),
+        personSum : $("#person_sum")
     }
     
     var accept = {
@@ -85,8 +86,10 @@
 			} else {
                                 targetDom.attr('act', data['toggle']);
                                 if (data['toggle']){
+                                    dom.personSum.html(dom.personSum.html() * 1 - 1);                                    
                                     targetDom.html('录取').removeClass('btn-danger').addClass('btn-success');
                                 } else {
+                                    dom.personSum.html(dom.personSum.html() * 1 + 1);
                                     targetDom.html('取消录取').removeClass('btn-success').addClass('btn-danger');;
                                 }
 			}

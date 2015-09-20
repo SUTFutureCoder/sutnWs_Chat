@@ -130,7 +130,9 @@ class Fresh_model extends CI_Model{
      * 
      * 
      * @access public
-     * @param type $name Description
+     * @param int $userId The id of user to toggle valid flag
+     * @param int $sectionId The id of section with user
+     * @param bool $toggle Accept or failed
      * @return bool Success of not
      */
     public function toggleValid($userId, $sectionId, $toggle){
@@ -141,5 +143,57 @@ class Fresh_model extends CI_Model{
             'valid' => $toggle,
         ));
         return $this->db->affected_rows();
+    }
+    
+    /**
+     * 获取各部门人数
+     * 
+     * 
+     * @access public
+     * @return array Fresh Sum of sections
+     */
+    public function getSectionFreshSum(){
+        $this->load->database();
+        $result = $this->db->query('SELECT section_id, count(*) as sum from re_user_section '
+                . ' WHERE valid = 1 AND user_id IN'
+                . '(SELECT user_id FROM re_user_role WHERE role_id = -1)  GROUP BY section_id');
+        return $result->result_array();
+    }
+    
+    /**
+     * 获取需抢人的名单
+     * 
+     * 
+     * @access public
+     * @return array List of fresh to be battled
+     */
+    public function getFreshBattleUserInfoList(){
+        $this->load->database();
+        
+        $result = $this->db->query('SELECT user_id, user_name, user_telephone, user_qq, user_major, user_talent, user_sex FROM user WHERE user_id IN (    SELECT `re_user_section`.`user_id` FROM `re_user_section`, `re_user_role` '
+                . 'WHERE `re_user_role`.`role_id` = -1 AND `re_user_section`.`valid` = 1 AND `re_user_section`.`user_id` = `re_user_role`.`user_id` '
+                . 'GROUP BY `re_user_section`.`user_id` HAVING count("re_user_section.user_id") > 1)');
+//        $this->db->select('re_user_section.user_id');
+//        $this->db->where('re_user_role.role_id', -1);
+//        $this->db->where('re_user_section.valid', 1);
+//        $this->db->where('re_user_section.user_id=re_user_role.user_id');
+//        $this->db->group_by('re_user_section.user_id');
+//        $this->db->having('count("re_user_section.user_id") > 1');
+//        $this->db->from('re_user_section, re_user_role');
+        return $result->result_array();
+    }
+    
+    /**
+     * 获取需抢人的部门
+     * 
+     * 
+     * @access public
+     * @param array $userList List of fresh to be battled
+     * @return array List of section to be battled
+     */
+    public function getSectionBattleList($userList){
+        $this->load->database();
+        $this->db->where_in('user_id', $userList);
+        return $this->db->get('re_user_section')->result_array();
     }
 }

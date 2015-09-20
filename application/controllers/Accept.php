@@ -161,4 +161,105 @@ class Accept extends CI_Controller{
            echo json_encode(array('code' => 0, 'status' => '更新失败'));
        }
    }
+   
+   /**
+    * 抢人登录
+    * 
+    * 
+    * @access public
+    * @return 
+    */
+    public function acceptBattleLogin(){
+        $this->load->helper('url');
+        $this->load->library('session');
+        if ($this->session->userdata('acceptBattle')){
+            $this->acceptBattle();
+        } else {
+            $this->load->view('accept_battle');
+        }
+    }
+   
+   /**
+    * 抢人
+    * 
+    * 
+    * @access public
+    * @return 
+    */
+    public function acceptBattle(){
+        $this->load->helper('url');
+        $this->load->library('session');
+        if (!$this->session->userdata('acceptBattle')){
+            echo '未通过认证的请求';
+            return 0;
+        }
+        
+        $this->load->model('fresh_model');
+        $sectionSum = array_fill(0, 6, 0);
+        $sectionSumTemp = $this->fresh_model->getSectionFreshSum();
+        foreach ($sectionSumTemp as $sectionSumTempValue){
+            $sectionSum[$sectionSumTempValue['section_id']] = $sectionSumTempValue['sum'];
+        }
+        $freshBattleUserInfoList = $this->fresh_model->getFreshBattleUserInfoList();
+        $userList = array();
+        $userInfo = array();
+        foreach ($freshBattleUserInfoList as $key => $freshBattleUserInfoListValue){
+            $userList[$freshBattleUserInfoListValue['user_id']] = $key;
+            $userInfo[$freshBattleUserInfoListValue['user_id']] = $freshBattleUserInfoListValue;
+        }
+        $freshBattleSectionList = array();
+        if (count($userList)){
+            $userList = array_flip($userList);
+            $freshBattleSectionList = $this->fresh_model->getSectionBattleList($userList);
+            $userList = array_flip($userList);
+            foreach ($freshBattleSectionList as $freshBattleSectionListValue){
+                if (!isset($userList[$freshBattleSectionListValue['user_id']]['section'])){
+                    $userList[$freshBattleSectionListValue['user_id']] = array();
+                }
+                $userList[$freshBattleSectionListValue['user_id']]['section'][] = $freshBattleSectionListValue;
+            }
+        }
+        
+        $this->load->model('section');
+        $sectionList = $this->section->getSectionList();
+        $sectionArray = array();
+        foreach ($sectionList as $sectionListValue){
+            $sectionArray[$sectionListValue['section_id']] = $sectionListValue['section_name'];
+        }
+        $this->load->view('accept_battle', array(
+            'userInfo' => $userInfo,
+            'userList' => $userList,
+            'sectionList' => $sectionArray,
+            'sectionSum' => $sectionSum,
+        ));
+    }
+    
+    
+    /**    
+    *  检查抢人密码
+    *  
+    * @access public
+   */
+    public function checkBattlePwd() {
+        $this->load->helper('url');
+        $this->load->library('session');
+        $acceptBattleAccess = $this->input->post('acceptBattleAccess',TRUE);
+        if(!isset($acceptBattleAccess)) {
+            self::index();
+        }
+        
+        if ($acceptBattleAccess == 'nwssutacm' . date('md')){
+            $this->session->set_userdata('acceptBattle', 1);
+            echo '1';
+        } else {
+            $this->session->unset_userdata('acceptBattle');
+            echo false;
+        }
+    }
+    
+    public function test(){
+        
+        
+        
+    }
 }
