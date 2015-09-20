@@ -7,18 +7,6 @@
         <link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <div class="alert alert-info person_sum" role="alert">
-        总数：<a id="person_sum_all"><?= array_sum($sectionSum) ?></a>
-        宣传：<a id="person_sum_xuanchuan"><?= $sectionSum[0] ?></a>
-        外联：<a id="person_sum_wailian"><?= $sectionSum[1] ?></a>
-        采编：<a id="person_sum_caibian"><?= $sectionSum[2] ?></a>
-        策划：<a id="person_sum_cehua"><?= $sectionSum[3] ?></a>
-        影音：<a id="person_sum_yingyin"><?= $sectionSum[4] ?></a>
-        技术：<a id="person_sum_jishu"><?= $sectionSum[5] ?></a>
-    </div>
-    <div>
-        
-    </div>
     <?php foreach ($userInfo as $userInfoValue): ?>
     <div class="panel panel-primary battle-panel">
         <div class="panel-heading">
@@ -67,7 +55,7 @@
                     <tr>
                         <td><?= $sectionList[$userListValue['section_id']] ?></td> 
                         <td><?= $userListValue['score'] ?></td> 
-                        <td><button type="button" class="btn btn-success"><?= $sectionList[$userListValue['section_id']] ?>录取</button></td>
+                        <td><button type="button" userId='<?= $userInfoValue['user_id'] ?>' section='<?= $userListValue['section_id'] ?>' class=" battle_button btn btn-success"><?= $sectionList[$userListValue['section_id']] ?>录取</button></td>
                     </tr>
                     <?php endforeach; ?>
                 </tbody>
@@ -81,42 +69,35 @@
 <script type="text/javascript" >
 (function(){
     var dom = {
-        userInfo : $(".user_info")
+        battle_button : $(".battle_button")
     }
     
-    var accept = {
+    var battle = {
         init : function (){
             this.eventFn();
         },
         
         eventFn : function(){
-            dom.userInfo.on('click', '.accept_button', function(){
-                var url = "<?= base_url('index.php/accept/acceptToggle') ?>";
+            dom.battle_button.on('click', function(){
+                var url = "<?= base_url('index.php/accept/acceptBattleChoose') ?>";
                 var targetDom = $(this);
-                var user_id = targetDom.attr('user_id');
-                var section_id = <?= $this->session->userdata('acceptAccess') ?>;
-                var toggle = targetDom.attr('act');
+                var user_id = targetDom.attr('userId');
+                var section_id = targetDom.attr('section');
+                var button_word = targetDom.html();
                 $.post(url,{
-			user_id : user_id,
-                        section_id : section_id,
-                        toggle : toggle
+			userId : user_id,
+                        chooseSection : section_id,
 		},function(data) {
                         var data = JSON.parse(data);
-			if(data['code'] != 1) {
-				alert(data['status']);
-			} else {
-                                targetDom.attr('act', data['toggle']);
-                                if (data['toggle']){
-                                    targetDom.html('录取').removeClass('btn-danger').addClass('btn-success');
-                                } else {
-                                    targetDom.html('取消录取').removeClass('btn-success').addClass('btn-danger');;
-                                }
+                        alert(data['status']);
+			if(data['code'] == 1) {
+                            targetDom.parent().parent().parent().html('已被' + button_word);
 			}
 		});
             });
         }
     }
-    accept.init();
+    battle.init();
 })();
 </script>	
 </body>

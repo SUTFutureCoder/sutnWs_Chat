@@ -145,6 +145,37 @@ class Fresh_model extends CI_Model{
         return $this->db->affected_rows();
     }
     
+    
+    /**
+     * 选择部门
+     * 
+     * 
+     * @access public
+     * @param int $userId The id of user to choose section
+     * @param int $sectionId The id of section with user
+     * @return bool Success of not
+     */
+    public function chooseSection($userId, $sectionId){
+        $this->load->database();
+        $this->db->where('user_id', $userId);
+        $this->db->where('section_id', $sectionId);
+        $result = $this->db->get('re_user_section')->result_array();
+        if (!count($result)){
+            return 0;
+        }
+        $this->db->delete('re_user_section', array(
+            'user_id' => $userId,
+        ));
+        
+        $this->db->insert('re_user_section', array(
+            'user_id' => $userId,
+            'section_id' => $sectionId,
+            'score' => $result[0]['score'],
+            'valid' => 1,
+        ));
+        return $this->db->affected_rows();
+    }
+    
     /**
      * 获取各部门人数
      * 

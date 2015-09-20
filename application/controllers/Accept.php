@@ -195,11 +195,12 @@ class Accept extends CI_Controller{
         }
         
         $this->load->model('fresh_model');
-        $sectionSum = array_fill(0, 6, 0);
-        $sectionSumTemp = $this->fresh_model->getSectionFreshSum();
-        foreach ($sectionSumTemp as $sectionSumTempValue){
-            $sectionSum[$sectionSumTempValue['section_id']] = $sectionSumTempValue['sum'];
-        }
+//        $sectionSum = array_fill(0, 7, 0);
+//        $sectionSumTemp = $this->fresh_model->getSectionFreshSum();
+//        
+//        foreach ($sectionSumTemp as $sectionSumTempValue){
+//            $sectionSum[$sectionSumTempValue['section_id']] = $sectionSumTempValue['sum'];
+//        }
         $freshBattleUserInfoList = $this->fresh_model->getFreshBattleUserInfoList();
         $userList = array();
         $userInfo = array();
@@ -230,7 +231,7 @@ class Accept extends CI_Controller{
             'userInfo' => $userInfo,
             'userList' => $userList,
             'sectionList' => $sectionArray,
-            'sectionSum' => $sectionSum,
+//            'sectionSum' => $sectionSum,
         ));
     }
     
@@ -257,9 +258,37 @@ class Accept extends CI_Controller{
         }
     }
     
-    public function test(){
+    /**    
+    *  进行抢人
+    *  
+    * @access public
+   */
+    public function acceptBattleChoose(){
+        $this->load->library('session');
+        if (!$this->session->userdata('acceptBattle')){
+            echo json_encode(array('code'=> -1, 'status' => '未通过认证的请求'));
+            return 0;
+        }
         
+        $userId = $this->input->post('userId', true);
+        $chooseSection = $this->input->post('chooseSection', true);
+        if (empty($userId) || !is_numeric($chooseSection)){
+            echo json_encode(array('code' => -2, 'status' => '错误的用户id'));
+            return 0;
+        }
         
+        if (empty($chooseSection) || 0 >= $chooseSection || 6 < $chooseSection){
+            echo json_encode(array('code' => -3, 'status' => '错误的部门选择'));
+            return 0;
+        }
         
+        $this->load->model('fresh_model');
+        if (!$this->fresh_model->chooseSection($userId, $chooseSection)){
+            echo json_encode(array('code' => 0, 'status' => '选择失败，查无此人或数据库异常'));
+            return 0;
+        } else {
+            echo json_encode(array('code' => 1, 'status' => '抢人成功'));
+            return 0;
+        }
     }
 }
